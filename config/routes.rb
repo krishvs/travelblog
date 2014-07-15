@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :trips
+
   resources :documents
 
   resources :folders
