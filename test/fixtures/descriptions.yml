@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  folder_id: 
+  description: MyText
+  title: MyString
+  mode: 1
+
+two:
+  folder_id: 
+  description: MyText
+  title: MyString
+  mode: 1
