@@ -1,39 +1,34 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = Cost -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => Cost %></h1>
+</div>
 
-<p>
-  <strong>Item:</strong>
-  <%= @cost.item %>
-</p>
+<div class="fieldset">
+  <dl>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:item) %></dt>
+      <dd><pre class="prettyprint"><%= @cost.item %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:price) %></dt>
+      <dd><pre class="prettyprint"><%= @cost.price %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:count) %></dt>
+      <dd><pre class="prettyprint"><%= @cost.count %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:mode) %></dt>
+      <dd><pre class="prettyprint"><%= @cost.mode %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:description) %></dt>
+      <dd><pre class="prettyprint"><%= @cost.description %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:date) %></dt>
+      <dd><pre class="prettyprint"><%= @cost.date %></pre></dd>
+  </dl>
+</div>
 
-<p>
-  <strong>Price:</strong>
-  <%= @cost.price %>
-</p>
+<div class="form-group">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              costs_path, :class => 'btn btn-default'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_cost_path(@cost), :class => 'btn btn-default' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              cost_path(@cost),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>
 
-<p>
-  <strong>Count:</strong>
-  <%= @cost.count %>
-</p>
-
-<p>
-  <strong>Folder:</strong>
-  <%= @cost.folder %>
-</p>
-
-<p>
-  <strong>Mode:</strong>
-  <%= @cost.mode %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @cost.description %>
-</p>
-
-<p>
-  <strong>Date:</strong>
-  <%= @cost.date %>
-</p>
-
-<%= link_to 'Edit', edit_cost_path(@cost) %> |
-<%= link_to 'Back', costs_path %>

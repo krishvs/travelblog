@@ -1,17 +1,46 @@
-<%= simple_form_for(@cost) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :item %>
-    <%= f.input :price %>
-    <%= f.input :count %>
-    <%= f.association :folder %>
-    <%= f.input :mode %>
-    <%= f.input :description %>
-    <%= f.input :date %>
+<%= form_for @cost, :html => { :class => 'form-horizontal form-model' } do |f| %>
+  <div class="form-group">
+    <%= f.label :item, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.text_field :item, :class => 'text-field form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :price, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.text_field :price, :class => 'text-field form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :count, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.text_field :count, :class => 'text-field form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :mode, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.number_field :mode, :class => 'text-field form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :description, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.text_area :description, :class => 'text-field form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :date, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.datetime_select :date, :class => 'text-field form-control' %>
+    </div>
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+  <div class="form-group">
+    <div class='col-md-offset-2 col-md-10'>
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                  costs_path, :class => 'btn btn-default' %>
+    </div>
   </div>
 <% end %>
