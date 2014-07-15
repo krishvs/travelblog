@@ -3,4 +3,5 @@ class Folder < ActiveRecord::Base
   has_and_belongs_to_many :folders
   has_many :costs
   has_many :descriptions
+  has_many :photos
 end
