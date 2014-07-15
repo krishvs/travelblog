@@ -1,5 +1,6 @@
-<h1>New description</h1>
+<%- model_class = Description -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => Description %></h1>
+</div>
+<%= render :partial => 'form' %>
 
-<%= render 'form' %>
-
-<%= link_to 'Back', descriptions_path %>

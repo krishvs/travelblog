@@ -1,31 +1,40 @@
-<h1>Listing descriptions</h1>
-
-<table>
+<%- model_class = Description -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => Description %></h1>
+</div>
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>Folder</th>
-      <th>Description</th>
-      <th>Title</th>
-      <th>Mode</th>
-      <th colspan="3"></th>
+      <th>ID</th>
+      <th><%= model_class.human_attribute_name(:description) %></th>
+      <th><%= model_class.human_attribute_name(:title) %></th>
+      <th><%= model_class.human_attribute_name(:mode) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
-
   <tbody>
     <% @descriptions.each do |description| %>
       <tr>
-        <td><%= description.folder %></td>
+        <td><%= description.id %></td>
         <td><%= description.description %></td>
         <td><%= description.title %></td>
         <td><%= description.mode %></td>
-        <td><%= link_to 'Show', description %></td>
-        <td><%= link_to 'Edit', edit_description_path(description) %></td>
-        <td><%= link_to 'Destroy', description, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%=l description.created_at, format: :long %></td>
+        <td>
+          <%= link_to description_path(description), :class => 'btn btn-xs', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
+            <%= glyph 'info-sign' %>
+            <%= glyph 'pencil' %>
+          <%- end -%>
+          <%= link_to description_path(description), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
+            <%= glyph 'remove' %>
+          <%- end -%>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Description', new_description_path %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_description_path,
+            :class => 'btn btn-primary' %>
