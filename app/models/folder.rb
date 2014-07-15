@@ -4,4 +4,5 @@ class Folder < ActiveRecord::Base
   has_many :costs
   has_many :descriptions
   has_many :photos
+  has_many :reminders
 end
