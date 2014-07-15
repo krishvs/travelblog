@@ -5,4 +5,5 @@ class Folder < ActiveRecord::Base
   has_many :descriptions
   has_many :photos
   has_many :reminders
+  has_many :documents
 end
