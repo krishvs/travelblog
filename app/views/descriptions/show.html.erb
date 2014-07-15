@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Folder:</strong>
+  <%= @description.folder %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @description.description %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @description.title %>
+</p>
+
+<p>
+  <strong>Mode:</strong>
+  <%= @description.mode %>
+</p>
+
+<%= link_to 'Edit', edit_description_path(@description) %> |
+<%= link_to 'Back', descriptions_path %>
