@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Item:</strong>
+  <%= @cost.item %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @cost.price %>
+</p>
+
+<p>
+  <strong>Count:</strong>
+  <%= @cost.count %>
+</p>
+
+<p>
+  <strong>Folder:</strong>
+  <%= @cost.folder %>
+</p>
+
+<p>
+  <strong>Mode:</strong>
+  <%= @cost.mode %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @cost.description %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @cost.date %>
+</p>
+
+<%= link_to 'Edit', edit_cost_path(@cost) %> |
+<%= link_to 'Back', costs_path %>
