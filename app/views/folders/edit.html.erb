@@ -1,6 +1,5 @@
-<h1>Editing folder</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', @folder %> |
-<%= link_to 'Back', folders_path %>
+<%- model_class = Folder -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => Folder %></h1>
+</div>
+<%= render :partial => 'form' %>
