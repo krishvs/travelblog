@@ -1,24 +1,28 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = Document -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => Document %></h1>
+</div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @document.name %>
-</p>
+<div class="fieldset">
+  <dl>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:name) %></dt>
+      <dd><pre class="prettyprint"><%= @document.name %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:mode) %></dt>
+      <dd><pre class="prettyprint"><%= @document.mode %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:description) %></dt>
+      <dd><pre class="prettyprint"><%= @document.description %></pre></dd>
+  </dl>
+</div>
 
-<p>
-  <strong>Mode:</strong>
-  <%= @document.mode %>
-</p>
+<div class="form-group">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              documents_path, :class => 'btn btn-default'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_document_path(@document), :class => 'btn btn-default' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              document_path(@document),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>
 
-<p>
-  <strong>Folder:</strong>
-  <%= @document.folder %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @document.description %>
-</p>
-
-<%= link_to 'Edit', edit_document_path(@document) %> |
-<%= link_to 'Back', documents_path %>
