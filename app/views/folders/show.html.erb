@@ -18,11 +18,11 @@
 
 <div class="form-group">
   <%= link_to t('.back', :default => t("helpers.links.back")),
-              folders_path, :class => 'btn btn-default'  %>
+              trip_folders_path(@trip), :class => 'btn btn-default'  %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_folder_path(@folder), :class => 'btn btn-default' %>
+              edit_trip_folder_path(@trip,@folder), :class => 'btn btn-default' %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              folder_path(@folder),
+              trip_folder_path(@trip,@folder),
               :method => 'delete',
               :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
               :class => 'btn btn-danger' %>

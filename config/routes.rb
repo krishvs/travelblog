@@ -5,11 +5,12 @@ Rails.application.routes.draw do
 
   resources :photos
 
-  resources :trips
+  resources :trips do
+    resources :folders
+  end
 
   resources :documents
 
-  resources :folders
 
   resources :costs
 

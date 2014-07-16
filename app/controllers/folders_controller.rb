@@ -10,10 +10,13 @@ class FoldersController < ApplicationController
   # GET /folders/1
   # GET /folders/1.json
   def show
+    @trip = Trip.find_by_id(params[:trip_id])
   end
 
   # GET /folders/new
   def new
+    Rails.logger.debug ">>> The value of the params is #{params.inspect} "
+    @trip = Trip.find_by_id(params[:trip_id])
     @folder = Folder.new
   end
 
@@ -24,12 +27,13 @@ class FoldersController < ApplicationController
   # POST /folders
   # POST /folders.json
   def create
-    @folder = Folder.new(folder_params)
+    @trip = Trip.find_by_id(params[:trip_id])
+    @folder = @trip.folders.create(folder_params)
 
     respond_to do |format|
       if @folder.save
-        format.html { redirect_to @folder, notice: 'Folder was successfully created.' }
-        format.json { render :show, status: :created, location: @folder }
+        format.html { redirect_to trip_folder_path(@trip,@folder), notice: 'Folder was successfully created.' }
+        format.json { render :show, status: :created, location: trip_folder_path(@folder) }
       else
         format.html { render :new }
         format.json { render json: @folder.errors, status: :unprocessable_entity }
