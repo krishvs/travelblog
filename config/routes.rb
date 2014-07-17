@@ -5,7 +5,8 @@ Rails.application.routes.draw do
 
   resources :photos
 
-  resources :trips , :path => '' do
+
+  resources :trips do
     resources :folders 
   end
 

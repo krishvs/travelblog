@@ -35,12 +35,12 @@
                   <div><%=l trip.created_at, format: :long %></div>
                 </div>
                 <div class="col-xs-1 col-xs-offset-4 trip-padding add-trip-margin-bottom">
-                   <%= link_to trip_path(trip), :method => :get, :class => '', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
+                   <%= link_to trip_path(:id => trip.name), :method => :get, :class => '', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
                     <i class="fa fa-eye fa-2x"></i>
                   <%- end -%>
                 </div>
                 <div class="col-xs-2 trip-padding add-trip-margin-bottom">
-                   <%= link_to trip_path(trip), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => '', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
+                   <%= link_to trip_path(:id => trip.name), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => '', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
                        <i class="fa fa-trash-o fa-2x"></i>
                     <%- end -%>
                 </div>
