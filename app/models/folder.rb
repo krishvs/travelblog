@@ -6,4 +6,6 @@ class Folder < ActiveRecord::Base
   has_many :photos
   has_many :reminders
   has_many :documents
+  
+  mount_uploader :image, ImageUploader
 end

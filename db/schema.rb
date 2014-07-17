@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140715080338) do
+ActiveRecord::Schema.define(version: 20140717074425) do
 
   create_table "costs", force: true do |t|
     t.string   "item"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 20140715080338) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image"
   end
 
   add_index "folders", ["trip_id"], name: "index_folders_on_trip_id"

@@ -69,7 +69,8 @@ class TripsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_trip
-      @trip = Trip.find(params[:id])
+      @trip = Trip.find_by_name(params[:id])
+      Rails.logger.debug ">>>>> The value of the trip is #{@trip.folders.inspect} >>>> "
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
