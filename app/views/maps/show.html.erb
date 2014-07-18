@@ -54,6 +54,7 @@
               </div>
             </div>
           <% end %>
+          <% if @map.addresses.length != 2 %>
             <div class="col-sm-4">
               <div class="panel panel-default ">
                 <div class="panel-body">
@@ -65,6 +66,7 @@
                 <div class="panel-footer">Panel footer</div>
               </div>
             </div>
+          <% end %>
         </div>
       </div>
     </div>   
@@ -74,16 +76,25 @@
     $(document).on('click','.folder-display-panel', function(){
       window.location.href = $(this).attr("data-folder-path");
     });
+    var original_point =[];
+    original_point[0] = [-12.044012922866312, -77.02470665341184]
+    original_point[1] = [-12.044012922866312, -77.02470665341184]
+
+    <% if @map.addresses.first %>
+    	original_point[0] = [<%= @map.addresses.first.latitude %>,<%= @map.addresses.first.longitude %>]
+    	original_point[1] = [<%= @map.addresses.last.latitude %>,<%= @map.addresses.last.longitude %>]
+   	<% end %>
+
     map = new GMaps({
         div: '#map',
-        lat: -12.043333,
-        lng: -77.028333
+        lat: original_point[0][0],
+        lng: original_point[0][1]
       });
       $('#start_travel').click(function(e){
         e.preventDefault();
         map.travelRoute({
-          origin: [-12.044012922866312, -77.02470665341184],
-          destination: [-12.090814532191756, -77.02271108990476],
+          origin: original_point[0],
+          destination: original_point[1],
           travelMode: 'driving',
           step: function(e){
             $('#instructions').append('<li>'+e.instructions+'</li>');

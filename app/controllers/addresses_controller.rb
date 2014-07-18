@@ -11,7 +11,7 @@ class AddressesController < ApplicationController
     @trip = Trip.find_by_name(params[:trip_id])
     @folder = @trip.folders.find_by_name(params[:folder_id])
     @map = @folders.maps.find_by_name(params[:map_id])
-    @addresses = @map.addresses
+    @addresses = @map.addresses.limit(2)
   end
 
   # GET /addresses/1
