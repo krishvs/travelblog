@@ -1,5 +1,6 @@
 class DescriptionsController < ApplicationController
-  before_action :set_description, only: [:show, :edit, :update, :destroy]
+  before_action :set_description_id, only: [:update]
+  before_action :set_description_name, only: [ :show, :edit, :destroy]
 
   # GET /descriptions
   # GET /descriptions.json
@@ -14,6 +15,8 @@ class DescriptionsController < ApplicationController
 
   # GET /descriptions/new
   def new
+    @trip = Trip.find_by_name(params[:trip_id])
+    @folder = @trip.folders.find_by_name(params[:folder_id])
     @description = Description.new
   end
 
@@ -24,7 +27,9 @@ class DescriptionsController < ApplicationController
   # POST /descriptions
   # POST /descriptions.json
   def create
-    @description = Description.new(description_params)
+    @trip = Trip.find_by_id(params[:trip_id])
+    @folder = @trip.folders.find_by_id(params[:folder_id])
+    @description = @folder.descriptions.create(description_params)
 
     respond_to do |format|
       if @description.save
@@ -63,9 +68,18 @@ class DescriptionsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_description
-      @description = Description.find(params[:id])
+    def set_description_name
+      @trip = Trip.find_by_name(params[:trip_id])
+      @folder = @trip.folders.find_by_name(params[:folder_id]) 
+      @description = @folder.descriptions.find_by_title(params[:id])
     end
+
+    def set_description_id
+      @trip = Trip.find_by_id(params[:trip_id])
+      @folder = @trip.folders.find_by_id(params[:folder_id]) 
+      @description = @folder.descriptions.find_by_id(params[:id])
+    end
+
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def description_params

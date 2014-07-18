@@ -6,7 +6,6 @@ class FoldersController < ApplicationController
   # GET /folders.json
   def index
     @trip = Trip.find_by_name(params[:trip_id])
-    redirect_to trip_path(:id => @trip.name)
   end
 
   # GET /folders/1

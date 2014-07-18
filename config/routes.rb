@@ -7,7 +7,11 @@ Rails.application.routes.draw do
 
 
   resources :trips do
-    resources :folders 
+    resources :folders, :path => '' do
+      resources :descriptions 
+      resources :routes
+      resources :costs
+    end
   end
 
   resources :documents

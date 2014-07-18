@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require pjax/pjax
+//= require medium/medium
 //= require bootstrap
 
 //= require_tree .

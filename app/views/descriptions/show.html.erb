@@ -6,7 +6,7 @@
 <div class="fieldset">
   <dl>
       <dt class="label label-default"><%= model_class.human_attribute_name(:description) %></dt>
-      <dd><pre class="prettyprint"><%= @description.description %></pre></dd>
+      <dd><pre class="prettyprint"><%=raw @description.description %></pre></dd>
       <dt class="label label-default"><%= model_class.human_attribute_name(:title) %></dt>
       <dd><pre class="prettyprint"><%= @description.title %></pre></dd>
       <dt class="label label-default"><%= model_class.human_attribute_name(:mode) %></dt>

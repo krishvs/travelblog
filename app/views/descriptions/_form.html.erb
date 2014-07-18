@@ -1,8 +1,9 @@
-<%= form_for @description, :html => { :class => 'form-horizontal form-model' } do |f| %>
+<%= form_for [@trip,@folder,@description], :html => { :class => 'form-horizontal form-model post-form' } do |f| %>
   <div class="form-group">
     <%= f.label :description, :class => 'control-label col-md-2' %>
     <div class="col-md-10">
-      <%= f.text_area :description, :class => 'text-field form-control' %>
+      <div id="post_description_div"></div>
+      <%= f.text_area :description, :class => 'text-field form-control', :style => "display:none;" %>
     </div>
   </div>
   <div class="form-group">
@@ -26,3 +27,24 @@
     </div>
   </div>
 <% end %>
+<script>
+   $(function() {
+    var editor = new MediumEditor('#post_description_div',{
+      anchorInputPlaceholder: 'Start your adventure',
+      buttons: ['bold', 'italic', 'quote','superscript','subscript','unorderedlist','orderedlist','pre','indent','outdent', 'strikethrough'],
+      diffLeft: 25,
+      diffTop: 10,
+      firstHeader: 'h1',
+      secondHeader: 'h2',
+      delay: 1000,
+      targetBlank: true
+    });
+    $(".post-form").submit(function( event ) {
+      event.preventDefault();
+      $("#description_description").val($('#post_description_div').html());
+      console.log('The value is ',$('#post_description_div').html());
+      this.submit();
+
+    });
+  });
+</script>
