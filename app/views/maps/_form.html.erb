@@ -1,0 +1,34 @@
+<%= form_for [@trip,@folder,@map], :html => { :class => 'form-horizontal form-model post-form' } do |f| %>
+  <div class="form-group">
+    <%= f.label :name, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.text_field :name, :class => 'text-field form-control' %>
+    </div>
+  </div>
+   <div class="form-group">
+    <%= f.label :mode, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.number_field :mode, :class => 'text-field form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :description, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.text_area :description, :class => 'text-field form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :transport, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.number_field :transport, :class => 'text-field form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class='col-md-offset-2 col-md-10'>
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                  descriptions_path, :class => 'btn btn-default' %>
+    </div>
+  </div>
+<% end %>
+

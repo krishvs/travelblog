@@ -1,0 +1,131 @@
+<%- model_class = Address -%>
+  <div class="col-sm-10 col-sm-offset-1">
+    <div class="row ">
+      <div class="page-header col-xs-9">
+        <span class="main-heading"><%=t '.title', :default => Trip %>/<%= @trip.name %>/<%= @folder.name %>/<%= @map.name %></span>
+      </div>
+      <div class="new-project-btn-div col-xs-3">
+        <%= link_to new_trip_folder_path(@trip),
+                :class => 'btn btn-default new-project' do%>
+          <i class="fa fa-folder-o "></i> New Folder
+        <%- end -%>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <ul class="nav nav-pills nav-stacked custom-sidebar">
+          <li><%= link_to 'Descriptions',
+              trip_folder_path(:trip_id => @trip.name, :id => @folder.name) %>
+          </li>
+          <li class="sidebar-active"><%= link_to 'Maps',
+              trip_folder_maps_path(:trip_id => @trip.name, :folder_id => @folder.name) %>
+          </li>
+          <li><a href="">Cost</a></li>
+          <li><a href="#">Photos</a></li>
+          <li><a href="#">Videos</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-9">
+      	<div class="row">
+	      	<div class="col-sm-12">
+	          <div id="map" class="custom-map"></div>
+	        </div>
+	        <div class="col-sm-12">
+	          <a href="#" id="start_travel" class="btn small">start</a>
+	          <ul id="instructions">
+	          </ul>
+	        </div>
+	    <div>
+        <div class="row">
+          <% @map.addresses.each do |address| %>
+            <div class="col-xs-4">
+              <div class="panel panel-default folder-display-panel" data-folder-path="<%=trip_folder_description_path(:trip_id => @trip.name,:folder_id => @folder.name, :map_id => @map.name, :id => address.address)%>">
+                <div class="panel-body folders-display-body">
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <%= raw address.address %>
+                    </div>
+                    <div class="col-xs-12 description">
+                        <%= address.updated_at %>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel-footer"><h5><%= address.address.capitalize %></h5></div>
+              </div>
+            </div>
+          <% end %>
+            <div class="col-sm-4">
+              <div class="panel panel-default ">
+                <div class="panel-body">
+                    New Folder
+                    <%= link_to new_trip_folder_map_address_path(:trip_id => @trip.name, :folder_id => @folder.name, :map_id => @map.name), :method => :get, :class => '', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
+                       <i class="fa fa-plus fa-2x"></i>
+                    <%- end -%>
+                </div>
+                <div class="panel-footer">Panel footer</div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>   
+  </div>
+<script>
+  $(function(){
+    $(document).on('click','.folder-display-panel', function(){
+      window.location.href = $(this).attr("data-folder-path");
+    });
+    map = new GMaps({
+        div: '#map',
+        lat: -12.043333,
+        lng: -77.028333
+      });
+      $('#start_travel').click(function(e){
+        e.preventDefault();
+        map.travelRoute({
+          origin: [-12.044012922866312, -77.02470665341184],
+          destination: [-12.090814532191756, -77.02271108990476],
+          travelMode: 'driving',
+          step: function(e){
+            $('#instructions').append('<li>'+e.instructions+'</li>');
+            $('#instructions li:eq('+e.step_number+')').delay(450*e.step_number).fadeIn(200, function(){
+              map.setCenter(e.end_location.lat(), e.end_location.lng());
+              map.drawPolyline({
+                path: e.path,
+                strokeColor: '#131540',
+                strokeOpacity: 0.6,
+                strokeWeight: 6
+              });
+            });
+          }
+        });
+      });
+  })
+
+</script>
+
+
+
+<!-- <p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @map.name %>
+</p>
+
+<p>
+  <strong>Mode:</strong>
+  <%= @map.mode %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @map.description %>
+</p>
+
+<p>
+  <strong>Transport:</strong>
+  <%= @map.transport %>
+</p>
+
+<%= link_to 'Edit', edit_trip_folder_map_path(:trip_id => @trip.name, :folder_id => @folder.name, :id => @map.name) %> |
+<%= link_to 'Back', trip_folder_maps_path(:trip_id => @trip.name, :folder_id => @folder.name) %> -->

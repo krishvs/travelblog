@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140717074425) do
+ActiveRecord::Schema.define(version: 20140718104249) do
+
+  create_table "addresses", force: true do |t|
+    t.string   "address"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "map_id"
+  end
 
   create_table "costs", force: true do |t|
     t.string   "item"
@@ -67,6 +76,16 @@ ActiveRecord::Schema.define(version: 20140717074425) do
   end
 
   add_index "folders_folders", ["folder_id"], name: "index_folders_folders_on_folder_id"
+
+  create_table "maps", force: true do |t|
+    t.string   "name"
+    t.integer  "mode"
+    t.text     "description"
+    t.integer  "transport"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "folder_id"
+  end
 
   create_table "photos", force: true do |t|
     t.string   "name"

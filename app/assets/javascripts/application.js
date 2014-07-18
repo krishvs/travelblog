@@ -15,6 +15,7 @@
 //= require turbolinks
 //= require pjax/pjax
 //= require medium/medium
+//= require gmaps/gmaps
 //= require bootstrap
 
 //= require_tree .
