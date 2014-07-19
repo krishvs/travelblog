@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140718104249) do
+ActiveRecord::Schema.define(version: 20140719064406) do
 
   create_table "addresses", force: true do |t|
     t.string   "address"
@@ -99,15 +99,13 @@ ActiveRecord::Schema.define(version: 20140718104249) do
 
   create_table "reminders", force: true do |t|
     t.string   "name"
-    t.datetime "time"
-    t.integer  "method"
     t.integer  "mode"
-    t.integer  "folder_id"
+    t.text     "description"
+    t.integer  "sent"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "folder_id"
   end
-
-  add_index "reminders", ["folder_id"], name: "index_reminders_on_folder_id"
 
   create_table "routes", force: true do |t|
     t.integer  "folder_id"

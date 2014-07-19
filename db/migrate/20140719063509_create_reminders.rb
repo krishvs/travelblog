@@ -1,11 +1,10 @@
 class CreateReminders < ActiveRecord::Migration
-  def change
+  def change    
     create_table :reminders do |t|
       t.string :name
-      t.datetime :time
-      t.integer :method
       t.integer :mode
-      t.references :folder, index: true
+      t.text :description
+      t.integer :sent
 
       t.timestamps
     end

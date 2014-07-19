@@ -2,14 +2,12 @@
 
 one:
   name: MyString
-  time: 2014-07-15 08:03:23
-  method: 1
   mode: 1
-  folder_id: 
+  description: MyText
+  sent: 1
 
 two:
   name: MyString
-  time: 2014-07-15 08:03:23
-  method: 1
   mode: 1
-  folder_id: 
+  description: MyText
+  sent: 1

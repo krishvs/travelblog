@@ -1,0 +1,2 @@
+namespace :reminder do
+end

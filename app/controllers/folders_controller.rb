@@ -29,7 +29,7 @@ class FoldersController < ApplicationController
   # POST /folders
   # POST /folders.json
   def create
-    @trip = Trip.find_by_name(params[:trip_id])
+    @trip = Trip.find_by_id(params[:trip_id])
     Rails.logger.debug ">>>> THe value of the folder params is #{folder_params} >> "
     @folder = @trip.folders.create(folder_params)
 

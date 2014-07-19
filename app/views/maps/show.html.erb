@@ -20,6 +20,9 @@
           <li class="sidebar-active"><%= link_to 'Maps',
               trip_folder_maps_path(:trip_id => @trip.name, :folder_id => @folder.name) %>
           </li>
+          <li><%= link_to 'Reminders',
+              trip_folder_reminders_path(:trip_id => @trip.name, :folder_id => @folder.name) %>
+          </li>
           <li><a href="">Cost</a></li>
           <li><a href="#">Photos</a></li>
           <li><a href="#">Videos</a></li>

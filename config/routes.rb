@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  resources :maps
-
-  resources :addresses
 
   get 'homes/index'
 
@@ -11,12 +8,13 @@ Rails.application.routes.draw do
 
 
   resources :trips do
-    resources :folders, :path => '' do
+    resources :folders, :path => 'f' do
       resources :descriptions 
       resources :maps do
         resources :addresses
       end
       resources :costs
+      resources :reminders
     end
   end
 
