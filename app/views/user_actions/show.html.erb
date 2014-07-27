@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+<div class="col-sm-10 col-sm-offset-1">
+    <div class="row ">
+      <div class="page-header col-xs-9">
+        <span class="main-heading"><%=t '.title', :default => Trip %></span>
+      </div>
+      <div class="new-project-btn-div col-xs-3">
+        <%= link_to new_trip_path,
+                :class => 'btn btn-default new-project' do%>
+          <i class="fa fa-folder-o "></i> New Trip
+        <%- end -%>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <ul class="nav nav-pills nav-stacked custom-sidebar">
+          <li class="sidebar-active"><a href="#">Folders</a></li>
+          <li><%= link_to 'Activities' %>
+          </li>
+          <li><a href="#">Profile</a></li>
+          <li><a href="#">Messages</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-9">
+      	<%= render 'timeline' %>
+      </div>
+    </div>   
+  </div>

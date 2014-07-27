@@ -1,4 +1,6 @@
 class Folder < ActiveRecord::Base
+  include PublicActivity::Model	
+
   belongs_to :trip
   has_and_belongs_to_many :folders
   has_many :costs

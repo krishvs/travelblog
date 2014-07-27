@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :actions
+
   get 'homes/index'
 
   resources :descriptions
@@ -15,6 +17,7 @@ Rails.application.routes.draw do
       resources :reminders
       resources :photos
     end
+    resources :user_actions
   end
 
   resources :addresses

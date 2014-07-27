@@ -15,6 +15,9 @@
       <div class="col-sm-3">
         <ul class="nav nav-pills nav-stacked custom-sidebar">
           <li class="sidebar-active"><a href="#">Folders</a></li>
+          <li><%= link_to 'Activities',
+              trip_user_action_path(:trip_id => @trip.name, :id => @trip.name) %>
+          </li>
           <li><a href="#">Profile</a></li>
           <li><a href="#">Messages</a></li>
         </ul>

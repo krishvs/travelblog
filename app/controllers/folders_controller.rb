@@ -1,3 +1,4 @@
+
 class FoldersController < ApplicationController
   before_action :set_folder_id, only: [:update]
   before_action :set_folder_name, only: [:edit, :destroy]
@@ -32,6 +33,7 @@ class FoldersController < ApplicationController
     @trip = Trip.find_by_id(params[:trip_id])
     Rails.logger.debug ">>>> THe value of the folder params is #{folder_params} >> "
     @folder = @trip.folders.create(folder_params)
+    @folder.create_activity key: 'Created Folder', owner: current_user
 
     respond_to do |format|
       if @folder.save
@@ -47,6 +49,7 @@ class FoldersController < ApplicationController
   # PATCH/PUT /folders/1
   # PATCH/PUT /folders/1.json
   def update
+    @folder.create_activity key: 'Updated Folder', owner: current_user
     respond_to do |format|
       if @folder.update(folder_params)
         format.html { redirect_to trip_folder_path(:trip_id => @trip.name,:id => @folder.name), notice: 'Folder was successfully updated.' }
