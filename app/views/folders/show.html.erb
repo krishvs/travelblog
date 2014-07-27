@@ -24,7 +24,9 @@
               trip_folder_reminders_path(:trip_id => @trip.name, :folder_id => @folder.name) %>
           </li>
           <li><a href="">Cost</a></li>
-          <li><a href="#">Photos</a></li>
+          <li><%= link_to 'Photos',
+              trip_folder_photos_path(:trip_id => @trip.name, :folder_id => @folder.name) %>
+          </li>
           <li><a href="#">Videos</a></li>
         </ul>
       </div>
@@ -50,7 +52,7 @@
             <div class="col-sm-4">
               <div class="panel panel-default ">
                 <div class="panel-body">
-                    New Folder
+                    New Description
                     <%= link_to new_trip_folder_description_path(:trip_id => @trip.name, :folder_id => @folder.name), :method => :get, :class => '', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
                        <i class="fa fa-plus fa-2x"></i>
                     <%- end -%>

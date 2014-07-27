@@ -47,8 +47,8 @@ class TripsController < ApplicationController
   def update
     respond_to do |format|
       if @trip.update(trip_params)
-        format.html { redirect_to @trip, notice: 'Trip was successfully updated.' }
-        format.json { render :show, status: :ok, location: @trip }
+        format.html { redirect_to trips_path, notice: 'Trip was successfully updated.' }
+        format.json { render :show, status: :ok, location: trips_path }
       else
         format.html { render :edit }
         format.json { render json: @trip.errors, status: :unprocessable_entity }

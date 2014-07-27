@@ -42,7 +42,7 @@
               <div class="panel panel-default ">
                 <div class="panel-body">
                     New Folder
-                    <%= link_to new_trip_folder_path(@trip), :method => :get, :class => '', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
+                    <%= link_to new_trip_folder_path(:trip_id => @trip.name), :method => :get, :class => '', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
                        <i class="fa fa-plus fa-2x"></i>
                     <%- end -%>
                 </div>

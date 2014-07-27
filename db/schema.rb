@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140719064406) do
+ActiveRecord::Schema.define(version: 20140726110315) do
 
   create_table "addresses", force: true do |t|
     t.string   "address"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20140719064406) do
     t.datetime "updated_at"
   end
 
-  add_index "costs", ["folder_id"], name: "index_costs_on_folder_id"
+  add_index "costs", ["folder_id"], name: "index_costs_on_folder_id", using: :btree
 
   create_table "descriptions", force: true do |t|
     t.integer  "folder_id"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20140719064406) do
     t.datetime "updated_at"
   end
 
-  add_index "descriptions", ["folder_id"], name: "index_descriptions_on_folder_id"
+  add_index "descriptions", ["folder_id"], name: "index_descriptions_on_folder_id", using: :btree
 
   create_table "documents", force: true do |t|
     t.string   "name"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20140719064406) do
     t.datetime "updated_at"
   end
 
-  add_index "documents", ["folder_id"], name: "index_documents_on_folder_id"
+  add_index "documents", ["folder_id"], name: "index_documents_on_folder_id", using: :btree
 
   create_table "folders", force: true do |t|
     t.string   "name"
@@ -69,13 +69,13 @@ ActiveRecord::Schema.define(version: 20140719064406) do
     t.string   "image"
   end
 
-  add_index "folders", ["trip_id"], name: "index_folders_on_trip_id"
+  add_index "folders", ["trip_id"], name: "index_folders_on_trip_id", using: :btree
 
   create_table "folders_folders", force: true do |t|
     t.integer "folder_id"
   end
 
-  add_index "folders_folders", ["folder_id"], name: "index_folders_folders_on_folder_id"
+  add_index "folders_folders", ["folder_id"], name: "index_folders_folders_on_folder_id", using: :btree
 
   create_table "maps", force: true do |t|
     t.string   "name"
@@ -93,9 +93,10 @@ ActiveRecord::Schema.define(version: 20140719064406) do
     t.integer  "folder_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image"
   end
 
-  add_index "photos", ["folder_id"], name: "index_photos_on_folder_id"
+  add_index "photos", ["folder_id"], name: "index_photos_on_folder_id", using: :btree
 
   create_table "reminders", force: true do |t|
     t.string   "name"
@@ -117,13 +118,13 @@ ActiveRecord::Schema.define(version: 20140719064406) do
     t.datetime "updated_at"
   end
 
-  add_index "routes", ["folder_id"], name: "index_routes_on_folder_id"
+  add_index "routes", ["folder_id"], name: "index_routes_on_folder_id", using: :btree
 
   create_table "routes_routes", force: true do |t|
     t.integer "route_id"
   end
 
-  add_index "routes_routes", ["route_id"], name: "index_routes_routes_on_route_id"
+  add_index "routes_routes", ["route_id"], name: "index_routes_routes_on_route_id", using: :btree
 
   create_table "trips", force: true do |t|
     t.string   "name"
@@ -132,9 +133,11 @@ ActiveRecord::Schema.define(version: 20140719064406) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
-  add_index "trips", ["user_id"], name: "index_trips_on_user_id"
+  add_index "trips", ["user_id"], name: "index_trips_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -152,8 +155,8 @@ ActiveRecord::Schema.define(version: 20140719064406) do
     t.string   "username"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  add_index "users", ["username"], name: "index_users_on_username", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
 end

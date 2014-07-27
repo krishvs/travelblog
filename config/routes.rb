@@ -4,8 +4,6 @@ Rails.application.routes.draw do
 
   resources :descriptions
 
-  resources :photos
-
 
   resources :trips do
     resources :folders, :path => 'f' do
@@ -15,6 +13,7 @@ Rails.application.routes.draw do
       end
       resources :costs
       resources :reminders
+      resources :photos
     end
   end
 

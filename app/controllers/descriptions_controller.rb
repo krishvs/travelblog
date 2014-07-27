@@ -1,11 +1,14 @@
 class DescriptionsController < ApplicationController
   before_action :set_description_id, only: [:update]
+  layout "description", only: [:new, :edit]
   before_action :set_description_name, only: [ :show, :edit, :destroy]
 
   # GET /descriptions
   # GET /descriptions.json
   def index
-    @descriptions = Description.all
+    @trip = Trip.find_by_name(params[:trip_id])
+    @folder = @trip.folders.find_by_name(params[:folder_id])
+    @descriptions = @folder.descriptions
   end
 
   # GET /descriptions/1
@@ -33,8 +36,8 @@ class DescriptionsController < ApplicationController
 
     respond_to do |format|
       if @description.save
-        format.html { redirect_to @description, notice: 'Description was successfully created.' }
-        format.json { render :show, status: :created, location: @description }
+        format.html { redirect_to trip_folder_descriptions_path(:trip_id => @trip.name,:folder_id => @folder.name ), notice: 'Description was successfully created.' }
+        format.json { render :show, status: :created, location: trip_folder_descriptions_path(:trip_id => @trip.name,:folder_id => @folder.name ) }
       else
         format.html { render :new }
         format.json { render json: @description.errors, status: :unprocessable_entity }
@@ -47,7 +50,7 @@ class DescriptionsController < ApplicationController
   def update
     respond_to do |format|
       if @description.update(description_params)
-        format.html { redirect_to @description, notice: 'Description was successfully updated.' }
+        format.html { redirect_to trip_folder_descriptions_path(:trip_id => @trip.name,:folder_id => @folder.name ), notice: 'Description was successfully updated.' }
         format.json { render :show, status: :ok, location: @description }
       else
         format.html { render :edit }

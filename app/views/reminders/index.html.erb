@@ -24,7 +24,9 @@
               trip_folder_reminders_path(:trip_id => @trip.name, :folder_id => @folder.name) %>
           </li>
           <li><a href="">Cost</a></li>
-          <li><a href="#">Photos</a></li>
+          <li><%= link_to 'Photos',
+              trip_folder_photos_path(:trip_id => @trip.name, :folder_id => @folder.name) %>
+          </li>
           <li><a href="#">Videos</a></li>
         </ul>
       </div>

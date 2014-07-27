@@ -1,10 +1,13 @@
 class PhotosController < ApplicationController
-  before_action :set_photo, only: [:show, :edit, :update, :destroy]
+  before_action :set_photo_id, only: [:update]
+  before_action :set_photo_name, only: [ :show, :edit, :destroy]
 
   # GET /photos
   # GET /photos.json
   def index
-    @photos = Photo.all
+    @trip = Trip.find_by_name(params[:trip_id])
+    @folder = @trip.folders.find_by_name(params[:folder_id])
+    @photos = @folder.photos
   end
 
   # GET /photos/1
@@ -14,6 +17,8 @@ class PhotosController < ApplicationController
 
   # GET /photos/new
   def new
+    @trip = Trip.find_by_name(params[:trip_id])
+    @folder = @trip.folders.find_by_name(params[:folder_id])
     @photo = Photo.new
   end
 
@@ -24,12 +29,14 @@ class PhotosController < ApplicationController
   # POST /photos
   # POST /photos.json
   def create
-    @photo = Photo.new(photo_params)
+    @trip = Trip.find_by_id(params[:trip_id])
+    @folder = @trip.folders.find_by_id(params[:folder_id])
+    @photo = @folder.photos.create(photo_params)
 
     respond_to do |format|
       if @photo.save
-        format.html { redirect_to @photo, notice: 'Photo was successfully created.' }
-        format.json { render :show, status: :created, location: @photo }
+        format.html { redirect_to trip_folder_photos_path(:trip_id => @trip.name,:folder_id => @folder.name ), notice: 'Photo was successfully created.' }
+        format.json { render :show, status: :created, location: trip_folder_photos_path(:trip_id => @trip.name,:folder_id => @folder.name ) }
       else
         format.html { render :new }
         format.json { render json: @photo.errors, status: :unprocessable_entity }
@@ -42,8 +49,8 @@ class PhotosController < ApplicationController
   def update
     respond_to do |format|
       if @photo.update(photo_params)
-        format.html { redirect_to @photo, notice: 'Photo was successfully updated.' }
-        format.json { render :show, status: :ok, location: @photo }
+        format.html { redirect_to trip_folder_photos_path(:trip_id => @trip.name,:folder_id => @folder.name ), notice: 'Photo was successfully updated.' }
+        format.json { render :show, status: :ok, location: trip_folder_photos_path(:trip_id => @trip.name,:folder_id => @folder.name ) }
       else
         format.html { render :edit }
         format.json { render json: @photo.errors, status: :unprocessable_entity }
@@ -62,13 +69,21 @@ class PhotosController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_photo
-      @photo = Photo.find(params[:id])
+
+    def set_photo_name
+      @trip = Trip.find_by_name(params[:trip_id])
+      @folder = @trip.folders.find_by_name(params[:folder_id]) 
+      @photo = @folder.photos.find_by_name(params[:id])
+    end
+
+    def set_photo_id
+      @trip = Trip.find_by_id(params[:trip_id])
+      @folder = @trip.folders.find_by_id(params[:folder_id]) 
+      @photo = @folder.photos.find_by_id(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def photo_params
-      params.require(:photo).permit(:name, :mode, :folder_id)
+      params.require(:photo).permit(:name, :mode, :folder_id, :image)
     end
 end
