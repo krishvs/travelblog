@@ -23,6 +23,12 @@ class FoldersController < ApplicationController
     @folder = Folder.new
   end
 
+  def activity
+    @trip = Trip.find_by_name(params[:trip_id])
+    @folder = @trip.folders.find_by_name(params[:id])
+    @activities = PublicActivity::Activity.order("created_at desc").where(owner_type: "Folder", owner_id: @folder.id, trackable_type: ['Description','Map','Reminder']).all
+  end
+
   # GET /folders/1/edit
   def edit
   end

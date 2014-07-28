@@ -33,7 +33,9 @@ class RemindersController < ApplicationController
     @trip = Trip.find_by_id(params[:trip_id])
     @folder = @trip.folders.find_by_id(params[:folder_id])
     @reminder = @folder.reminders.create(reminder_params)
-
+    if reminder_params[:mode]
+      @reminder.create_activity key: 'Created Reminder', owner: @folder
+    end
     respond_to do |format|
       if @reminder.save
         format.html { redirect_to @reminder, notice: 'Reminder was successfully created.' }
@@ -48,6 +50,9 @@ class RemindersController < ApplicationController
   # PATCH/PUT /reminders/1
   # PATCH/PUT /reminders/1.json
   def update
+    if reminder_params[:mode]
+      @reminder.create_activity key: 'Updated Reminder', owner: @folder
+    end
     respond_to do |format|
       if @reminder.update(reminder_params)
         format.html { redirect_to @reminder, notice: 'Reminder was successfully updated.' }

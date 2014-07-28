@@ -34,7 +34,9 @@ class MapsController < ApplicationController
     @trip = Trip.find_by_id(params[:trip_id])
     @folder = @trip.folders.find_by_id(params[:folder_id])
     @map = @folder.maps.create(map_params)
-
+    if map_params[:mode]
+      @map.create_activity key: 'Created Map', owner: @folder
+    end
     respond_to do |format|
       if @map.save
         format.html { redirect_to @map, notice: 'Map was successfully created.' }
@@ -49,6 +51,9 @@ class MapsController < ApplicationController
   # PATCH/PUT /maps/1
   # PATCH/PUT /maps/1.json
   def update
+    if map_params[:mode]
+      @map.create_activity key: 'Updated Map', owner: @folder
+    end
     respond_to do |format|
       if @map.update(map_params)
         format.html { redirect_to @map, notice: 'Map was successfully updated.' }

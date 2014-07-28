@@ -33,6 +33,11 @@ class DescriptionsController < ApplicationController
     @trip = Trip.find_by_id(params[:trip_id])
     @folder = @trip.folders.find_by_id(params[:folder_id])
     @description = @folder.descriptions.create(description_params)
+    Rails.logger.debug ">>> The valuej of the params is #{description_params[:mode]}  node is #{description_params.inspect}"
+    if description_params[:mode]  
+      Rails.logger.debug ">>>> I am creating a description here >>>>>>>>> in the public acticity "
+      @description.create_activity key: 'Created Description', owner: @folder
+    end
 
     respond_to do |format|
       if @description.save
@@ -48,6 +53,9 @@ class DescriptionsController < ApplicationController
   # PATCH/PUT /descriptions/1
   # PATCH/PUT /descriptions/1.json
   def update
+    if description_params[:mode]
+      @description.create_activity key: 'Updated Description', owner: @folder
+    end
     respond_to do |format|
       if @description.update(description_params)
         format.html { redirect_to trip_folder_descriptions_path(:trip_id => @trip.name,:folder_id => @folder.name ), notice: 'Description was successfully updated.' }
