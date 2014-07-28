@@ -31,7 +31,20 @@
         </ul>
       </div>
       <div class="col-sm-9">
-        <%= render "timeline" %>
+        <div id="my-timeline" class="col-sm-12"></div>
+        <script>
+            console.log('The value of this url is '+'<%= trip_folder_path(:trip_id => @trip.name, :id => @folder.name)%>')
+            var url = '<%= trip_folder_path(:trip_id => @trip.name, :id => @folder.name)%>'+'/timeline.json'
+            $(document).ready(function() {
+                createStoryJS({
+                    type:       'timeline',
+                    width:      '800',
+                    height:     '600',
+                    source:     url,
+                    embed_id:   'my-timeline'
+                });
+            });
+        </script>
       </div>
     </div>   
   </div>

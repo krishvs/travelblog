@@ -1,6 +1,7 @@
 
 class FoldersController < ApplicationController
   before_action :set_folder_id, only: [:update]
+  layout "activity", only: [:activity]
   before_action :set_folder_name, only: [:edit, :destroy]
 
   # GET /folders
