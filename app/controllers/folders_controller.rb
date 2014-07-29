@@ -30,6 +30,35 @@ class FoldersController < ApplicationController
     @activities = PublicActivity::Activity.order("created_at desc").where(owner_type: "Folder", owner_id: @folder.id, trackable_type: ['Description','Map','Reminder']).all
   end
 
+  def timeline
+    @trip = Trip.find_by_name(params[:trip_id])
+    @folder = @trip.folders.find_by_name(params[:id])
+    @activities = PublicActivity::Activity.order("created_at desc").where(owner_type: "Folder", owner_id: @folder.id, trackable_type: ['Description','Map','Reminder']).all
+    Rails.logger.debug "The valuebo f hte activities is #{@activities.inspect}"
+    custom_timeline = {};
+    timeline_main = {
+      "headline"=> "Trip to #{@trip.name} - #{@folder.name} Timeline",
+      "type"=> "default",
+      "text"=> "#{@trip.description}"
+    }
+    activity_timeline = [];
+    @activities.each do |activity|
+      my_model=activity.trackable_type.classify.constantize.find_by_id(activity.trackable_id)
+        activity_timeline.push({
+            "startDate" => my_model.created_at,
+            "endDate" => my_model.updated_at,
+            "headline" => "#{activity.trackable_type === 'Description'? my_model.title : my_model.name} action - #{activity.key}",
+            "text" => my_model.description
+          })
+    end
+    timeline_main.merge!("date" => activity_timeline)
+    custom_timeline.merge!("timeline" => timeline_main)
+    respond_to do |format|
+      format.html  # index.html.erb
+      format.json  { render :json => custom_timeline.to_json }
+    end
+  end
+
   # GET /folders/1/edit
   def edit
   end

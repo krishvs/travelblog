@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :trips do
     resources :folders, :path => 'f' do
       get 'activity', on: :member
+      get 'timeline', on: :member
       resources :descriptions 
       resources :maps do
         resources :addresses
