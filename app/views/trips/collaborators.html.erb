@@ -1,0 +1,53 @@
+<%- model_class = Trip -%>
+  <div class="col-sm-10 col-sm-offset-1">
+    <div class="row ">
+      <div class="page-header col-xs-9">
+        <span class="main-heading"><%=t '.title', :default => Trip %>/<%= @trip.name %></span>
+      </div>
+      <div class="new-project-btn-div col-xs-3">
+        <%= link_to new_trip_path,
+                :class => 'btn btn-default new-project' do%>
+          <i class="fa fa-folder-o "></i> New Trip
+        <%- end -%>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <ul class="nav nav-pills nav-stacked custom-sidebar">
+          <li class="sidebar-active"><a href="#">Folders</a></li>
+          <li><%= link_to 'Activities',
+              trip_user_action_path(:trip_id => @trip.name, :id => @trip.name) %>
+          </li>
+          <li><a href="#">Profile</a></li>
+          <li><a href="#">Messages</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-9">
+        <div class="row">
+          <input type="text" placeholder="name of collaborator" name="users" id="user_name">
+          <button id="add_user" class="btn btn-primary">Add User</button>
+        </div>
+      </div>
+      <script>
+        var url = "<%= add_collaborator_trip_path(:id => @trip.name) %>"
+        $(function(){
+          $('#add_user').click(function(){
+            $.ajax({
+              url:url,
+              data: {
+                user: $('#user_name').val()
+              },
+              contentType: 'application/json; charset=utf-8',
+              success: function(){
+                console.log('There was success in adding user');
+              },
+              error: function(err){
+                console.log('Tehre was an error in adding the user ',err);
+              }
+            })
+          });
+        })
+      </script>
+    </div>   
+  </div>
+

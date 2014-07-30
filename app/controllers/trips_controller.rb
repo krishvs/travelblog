@@ -3,7 +3,7 @@ class TripsController < ApplicationController
   #->Prelang (scaffolding:rails/scope_to_user)
   before_filter :require_user_signed_in, only: [:new, :edit, :create, :update, :destroy]
 
-  before_action :set_trip, only: [:show, :edit, :update, :destroy]
+  before_action :set_trip, only: [:show, :edit, :update, :destroy, :collaborators]
 
   # GET /trips
   # GET /trips.json
@@ -23,6 +23,20 @@ class TripsController < ApplicationController
 
   # GET /trips/1/edit
   def edit
+  end
+
+  def collaborators
+  end
+
+  def add_collaborator
+    if request.xhr?
+      user = User.find_by_username(params[:user])
+      if user
+        Rails.logger.info ">>>>> Got a user #{user.inspect}"
+      else
+        Rails.logger.info ">>>>> No user #{params[:user]}"
+      end
+    end
   end
 
   # POST /trips

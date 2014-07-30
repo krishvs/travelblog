@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
 
   resources :trips do
+    get 'collaborators', on: :member
+    get 'add_collaborator', on: :member
     resources :folders, :path => 'f' do
       get 'activity', on: :member
       get 'timeline', on: :member
