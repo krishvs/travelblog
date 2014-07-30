@@ -3,12 +3,12 @@ class TripsController < ApplicationController
   #->Prelang (scaffolding:rails/scope_to_user)
   before_filter :require_user_signed_in, only: [:new, :edit, :create, :update, :destroy]
 
-  before_action :set_trip, only: [:show, :edit, :update, :destroy, :collaborators]
+  before_action :set_trip, only: [:show, :edit, :update, :destroy, :collaborators, :add_collaborator]
 
   # GET /trips
   # GET /trips.json
   def index
-    @trips = Trip.all
+    @trips = current_user.trips
   end
 
   # GET /trips/1
@@ -32,9 +32,14 @@ class TripsController < ApplicationController
     if request.xhr?
       user = User.find_by_username(params[:user])
       if user
+        if user.id != current_user.id
+          @trip.users += [user]
+        end
         Rails.logger.info ">>>>> Got a user #{user.inspect}"
+        render :json => { :action => "user_added" }
       else
         Rails.logger.info ">>>>> No user #{params[:user]}"
+        render :json => { :action => "user_added" }
       end
     end
   end
@@ -43,12 +48,13 @@ class TripsController < ApplicationController
   # POST /trips.json
   def create
     @trip = Trip.new(trip_params)
-    @trip.user = current_user
+    users = [current_user]
+    @trip.users += users
 
     respond_to do |format|
       if @trip.save
-        format.html { redirect_to @trip, notice: 'Trip was successfully created.' }
-        format.json { render :show, status: :created, location: @trip }
+        format.html { redirect_to trips_path, notice: 'Trip was successfully created.' }
+        format.json { render :show, status: :created, location: trips_path }
       else
         format.html { render :new }
         format.json { render json: @trip.errors, status: :unprocessable_entity }

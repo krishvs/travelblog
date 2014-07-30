@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140727120117) do
+ActiveRecord::Schema.define(version: 20140730161557) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -145,7 +145,6 @@ ActiveRecord::Schema.define(version: 20140727120117) do
 
   create_table "trips", force: true do |t|
     t.string   "name"
-    t.integer  "user_id"
     t.integer  "mode"
     t.text     "description"
     t.datetime "created_at"
@@ -154,7 +153,10 @@ ActiveRecord::Schema.define(version: 20140727120117) do
     t.float    "longitude"
   end
 
-  add_index "trips", ["user_id"], name: "index_trips_on_user_id", using: :btree
+  create_table "trips_users", force: true do |t|
+    t.integer "trip_id"
+    t.integer "user_id"
+  end
 
   create_table "user_actions", force: true do |t|
     t.datetime "created_at"
