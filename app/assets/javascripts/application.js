@@ -16,6 +16,9 @@
 //= require pjax/pjax
 //= require medium/medium
 //= require gmaps/gmaps
+//= require masonry/index
+//= require imagesloaded/index
+//= require momentjs/index
 //= require bootstrap
 
 //= require_tree .

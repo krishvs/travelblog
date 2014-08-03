@@ -1,4 +1,4 @@
-class TripsController < ApplicationController
+  class TripsController < ApplicationController
 
   #->Prelang (scaffolding:rails/scope_to_user)
   before_filter :require_user_signed_in, only: [:new, :edit, :create, :update, :destroy]
@@ -26,6 +26,9 @@ class TripsController < ApplicationController
   end
 
   def collaborators
+    respond_to do |format|
+      format.html { render :layout => false }
+    end
   end
 
   def add_collaborator

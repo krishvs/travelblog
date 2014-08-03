@@ -21,6 +21,9 @@ class DescriptionsController < ApplicationController
     @trip = Trip.find_by_name(params[:trip_id])
     @folder = @trip.folders.find_by_name(params[:folder_id])
     @description = Description.new
+    if request.headers['X-PJAX']
+      render :layout => false
+    end
   end
 
   # GET /descriptions/1/edit

@@ -1,6 +1,7 @@
 <%- model_class = Folder -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => Folder %></h1>
+<div class="modal-header">
+	<h5>Add folder</5>
 </div>
-<%= render :partial => 'form' %>
-
+<div class="modal-body">
+	<%= render :partial => 'form' %>
+</div>

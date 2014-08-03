@@ -1,11 +1,11 @@
-<%= form_for [@trip,@folder,@description], :html => { :class => 'row post-form' } do |f| %>
+<%= form_for [@trip,@folder,@description], :html => { :class => 'row post-form top-margin' } do |f| %>
   <div class="row">
-      <div class="col-md-2 col-md-offset-5 post-form-medium">
-        <%= f.text_field :title, :class => 'text-field form-control nooutline', :placeholder => "Title" %>
-      </div>
+    <div class="col-md-6 post-form-medium">
+      <%= f.text_field :title, :class => 'text-field form-control nooutline', :placeholder => "Title" %>
+    </div>
   </div>
   <div class="row">
-      <div id="post_description_div" class="col-md-10 col-md-offset-2 post-form-medium"></div>
+      <div id="post_description_div" class="col-md-10 col-md-offset-1 post-form-medium"></div>
       <%= f.text_area :description, :class => 'text-field form-control', :style => "display:none;" %>
   </div>
   <div class="row">

@@ -2,7 +2,7 @@
   <div class="col-sm-10 col-sm-offset-1">
     <div class="row ">
       <div class="page-header col-xs-9">
-        <span class="main-heading"><%=t '.title', :default => Trip %>/<%= @trip.name %></span>
+        <span class="main-heading"><%= @trip.name %></span>
       </div>
       <div class="new-project-btn-div col-xs-3">
         <%= link_to new_trip_path,
@@ -13,14 +13,20 @@
     </div>
     <div class="row">
       <div class="col-sm-3">
-        <ul class="nav nav-pills nav-stacked custom-sidebar">
-          <li class="sidebar-active"><a href="#">Folders</a></li>
-          <li><%= link_to 'Activities',
-              trip_user_action_path(:trip_id => @trip.name, :id => @trip.name) %>
-          </li>
-          <li><a href="#">Profile</a></li>
-          <li><a href="#">Messages</a></li>
-        </ul>
+        <div class="row">
+          <ul class="nav nav-pills nav-stacked custom-sidebar">
+            <li class="sidebar-active"><a href="#">Folders</a></li>
+            <li><a id="trip-history">History</a></li>
+            <li><a id="add-collaborators">Add Collaborators</a></li>
+            <li><a href="#">Profile</a></li>
+          </ul>
+        </div>
+        <div class="row add-members-box">
+          <ul class="nav nav-pills nav-stacked">
+           <li><h5 class="member-count"><%= @trip.users.length %> Members</h5></li>
+           <li><i class="fa fa-plus add-members"></i></li>
+          </ul>
+        </div>
       </div>
       <div class="col-sm-9">
         <div class="row">
@@ -28,39 +34,104 @@
             <div class="col-xs-4">
               <div class="panel panel-default folder-display-panel" data-folder-path="<%=trip_folder_path(:trip_id => @trip.name,:id => folder.name) %>">
                 <div class="panel-body folders-display-body">
-                  <div class="row">
+                  <div class="overlay-div row">
+                    <div class="col-xs-2 col-xs-offset-4 add-margin">
+                      <%= link_to trip_folder_path(:trip_id => @trip.name,:id => folder.name), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => '', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
+                       <i class="fa fa-trash-o fa-2x"></i>
+                      <%- end -%>
+                    </div>
+                     <div class="col-xs-2 add-margin">
+                      <i class="fa fa-pencil-square-o fa-2x custom-edit-icon" id="" data-folder-edit-path="<%= edit_trip_folder_path(:trip_id => @trip.name,:id => folder.name)%>"></i> 
+                    </div>
+                  </div>
+                  <div class="row content-body">
                     <div class="col-xs-12">
                       <%= image_tag folder.image_url(:display) if folder.image? %>
                     </div>
                     <div class="col-xs-12 description">
-                        <%= folder.updated_at %>
+                        <%= folder.description ? folder.description[0..40] : "No description set"  %> 
                     </div>
                   </div>
                 </div>
-                <div class="panel-footer"><h5><%= folder.name.capitalize %></h5></div>
+                <div class="panel-footer"><%= folder.name.capitalize[0..10] %>  <span class="time"><%= folder.updated_at %></span></div>
               </div>
             </div>
           <% end %>
-            <div class="col-sm-4">
+            <div class="col-xs-4">
               <div class="panel panel-default ">
                 <div class="panel-body">
                     New Folder
-                    <%= link_to new_trip_folder_path(:trip_id => @trip.name), :method => :get, :class => '', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
-                       <i class="fa fa-plus fa-2x"></i>
-                    <%- end -%>
+                    <i class="fa fa-plus fa-2x" id="new-trip"></i>
                 </div>
                 <div class="panel-footer">Panel footer</div>
               </div>
             </div>
         </div>
       </div>
+        <div class="modal fade" id="myModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     </div>   
   </div>
 <script>
   $(function(){
+    $('.time').each(function(){
+      $(this).html('updated '+moment($(this).html(), "YYYYMMDD").fromNow());
+    });
     $(document).on('click','.folder-display-panel', function(){
       window.location.href = $(this).attr("data-folder-path");
-    })
+    });
+    $(document).on('click','#add-collaborators', function(){
+      $('#myModal').find('.modal-dialog').first().addClass('modal-sm');
+      $('#myModal').modal({
+        remote: "<%= collaborators_trip_path(:id => @trip.name)%>"
+      });
+    });
+    
+    $(document).on('click','.add-members', function(){
+      window.location.href = "<%= collaborators_trip_path(:id => @trip.name)%>";
+    });
+    $(document).on('click','#new-trip', function(){
+      $('#myModal').modal({
+        remote: "<%= new_trip_folder_path(:trip_id => @trip.name)%>"
+      })
+    });
+    $(document).on('click','#trip-history', function(){
+      $('#myModal').modal({
+        remote: "<%= trip_user_action_path(:trip_id => @trip.name, :id => @trip.name) %>"
+      })
+    });
+    $(document).on('click','.custom-edit-icon', function(e){
+        e.stopPropagation()
+       url = $(this).attr('data-folder-edit-path');
+       console.log('The value of the uel is ',url);
+      $('#myModal').modal({
+        remote: url
+      })
+    });
+    $('body').on('hidden.bs.modal', '.modal', function () {
+      if($(this).find('.modal-dialog').first().hasClass('modal-sm')){
+        $(this).find('.modal-dialog').first().removeClass("modal-sm");
+      }
+        $(this).removeData('bs.modal');
+    });
+
+    $('.folder-display-panel').hover(function(){
+      console.log('I am in hover');
+      $(this).find('.panel-footer').first().addClass('darken');
+      $(this).find('.panel-body').first().addClass('whiten');
+      $(this).find('.overlay-div').first().show();
+      console.log( $(this).find('.panel-footer').first().attr('class'))
+    },function(){
+       $(this).find('.panel-body').first().removeClass('whiten');
+      $(this).find('.panel-footer').first().removeClass('darken');
+      $(this).find('.overlay-div').first().hide();
+      // $(this).removeClass('darken');
+    });
+
   })
 
 </script>

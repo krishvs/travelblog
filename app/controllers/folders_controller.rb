@@ -22,6 +22,9 @@ class FoldersController < ApplicationController
     Rails.logger.debug ">>> The value of the params is #{params.inspect} "
     @trip = Trip.find_by_name(params[:trip_id])
     @folder = Folder.new
+    respond_to do |format|
+      format.html { render :layout => false }
+    end
   end
 
   def activity
@@ -61,6 +64,9 @@ class FoldersController < ApplicationController
 
   # GET /folders/1/edit
   def edit
+    respond_to do |format|
+      format.html { render :layout => false }
+    end
   end
 
   # POST /folders

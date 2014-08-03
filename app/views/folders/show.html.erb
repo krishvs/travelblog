@@ -33,18 +33,28 @@
           <li><a href="#">Videos</a></li>
         </ul>
       </div>
-      <div class="col-sm-9">
+      <div class="col-sm-9" id="pjax-container">
         <div class="row">
           <% @folder.descriptions.each do |description| %>
-            <div class="col-xs-4">
+            <div class="col-xs-4 ">
               <div class="panel panel-default folder-display-panel" data-folder-path="<%=trip_folder_description_path(:trip_id => @trip.name,:folder_id => @folder.name, :id => description.title)%>">
                 <div class="panel-body folders-display-body">
-                  <div class="row">
+                  <div class="overlay-div row">
+                    <div class="col-xs-2 col-xs-offset-4 add-margin">
+                      <%= link_to trip_folder_description_path(:trip_id => @trip.name,:folder_id => @folder.name, :id => description.title), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => '', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
+                       <i class="fa fa-trash-o fa-2x"></i>
+                      <%- end -%>
+                    </div>
+                     <div class="col-xs-2 add-margin">
+                      <i class="fa fa-pencil-square-o fa-2x custom-edit-icon" id="" data-folder-edit-path="<%= edit_trip_folder_description_path(:trip_id => @trip.name,:folder_id => @folder.name, :id => description.title)%>"></i> 
+                    </div>
+                  </div>
+                  <div class="row content-body">
                     <div class="col-xs-12">
                       <%= raw description.description %>
                     </div>
                     <div class="col-xs-12 description">
-                        <%= description.updated_at %>
+                        <span class="time"><%= description.updated_at %></span>
                     </div>
                   </div>
                 </div>
@@ -56,9 +66,7 @@
               <div class="panel panel-default ">
                 <div class="panel-body">
                     New Description
-                    <%= link_to new_trip_folder_description_path(:trip_id => @trip.name, :folder_id => @folder.name), :method => :get, :class => '', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
-                       <i class="fa fa-plus fa-2x"></i>
-                    <%- end -%>
+                     <i class="fa fa-plus fa-2x" id="new-description"></i>
                 </div>
                 <div class="panel-footer">Panel footer</div>
               </div>
@@ -71,7 +79,31 @@
   $(function(){
     $(document).on('click','.folder-display-panel', function(){
       window.location.href = $(this).attr("data-folder-path");
-    })
+    });
+
+    $('.folder-display-panel').hover(function(){
+      console.log('I am in hover');
+      $(this).find('.panel-footer').first().addClass('darken');
+      $(this).find('.panel-body').first().addClass('whiten');
+      $(this).find('.overlay-div').first().show();
+      console.log( $(this).find('.panel-footer').first().attr('class'))
+    },function(){
+       $(this).find('.panel-body').first().removeClass('whiten');
+      $(this).find('.panel-footer').first().removeClass('darken');
+      $(this).find('.overlay-div').first().hide();
+      // $(this).removeClass('darken');
+    });
+
+    $('.time').each(function(){
+      $(this).html('updated '+moment($(this).html(), "YYYYMMDD").fromNow());
+    });
+
+    $(document).on('click','#new-description', function(){
+      $.pjax({
+        url: "<%= new_trip_folder_description_path(:trip_id => @trip.name, :folder_id => @folder.name) %>",
+        container: '#pjax-container'
+      }); 
+    });
   })
 
 </script>

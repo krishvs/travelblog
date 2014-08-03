@@ -1,41 +1,41 @@
-<%= form_for [@trip,@folder], :html => { :class => 'form-horizontal form-model',:multipart => true } do |f| %>
-  <div class="form-group">
-    <%= f.label :name, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.text_field :name, :class => 'text-field form-control' %>
+  <div>
+  <%= form_for [@trip,@folder], :html => { :class => 'form-horizontal form-model',:multipart => true } do |f| %>
+    <div class="form-group">
+      <%= f.label :name, :class => 'control-label col-md-2' %>
+      <div class="col-md-10">
+        <%= f.text_field :name, :class => 'text-field form-control' %>
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :mode, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.number_field :mode, :class => 'text-field form-control' %>
+    <div class="form-group">
+      <%= f.label :mode, :class => 'control-label col-md-2' %>
+      <div class="col-md-10">
+        <%= f.number_field :mode, :class => 'text-field form-control' %>
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :image, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.file_field  :image %>
+    <div class="form-group">
+      <%= f.label :image, :class => 'control-label col-md-2' %>
+      <div class="col-md-10">
+        <%= f.file_field  :image %>
+      </div>
     </div>
-  </div>
-    
-  <div class="form-group">
-    <%= f.label :total_cost, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.text_field :total_cost, :class => 'text-field form-control' %>
+      
+    <div class="form-group">
+      <%= f.label :total_cost, :class => 'control-label col-md-2' %>
+      <div class="col-md-10">
+        <%= f.text_field :total_cost, :class => 'text-field form-control' %>
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :description, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.text_area :description, :class => 'text-field form-control' %>
+    <div class="form-group">
+      <%= f.label :description, :class => 'control-label col-md-2' %>
+      <div class="col-md-10">
+        <%= f.text_area :description, :class => 'text-field form-control' %>
+      </div>
     </div>
-  </div>
 
-  <div class="form-group">
-    <div class='col-md-offset-2 col-md-10'>
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                  trip_folders_path(@trip), :class => 'btn btn-default' %>
+    <div class="form-group">
+      <div class='col-md-offset-2 col-md-10'>
+        <%= f.submit nil, :class => 'btn btn-primary' %>
+      </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>
