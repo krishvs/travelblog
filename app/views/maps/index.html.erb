@@ -1,77 +1,48 @@
 <%- model_class = Folder -%>
-  <div class="col-sm-10 col-sm-offset-1">
-    <div class="row ">
-      <div class="page-header col-xs-9">
-        <span class="main-heading"><%=t '.title', :default => Trip %>/<%= @trip.name %>/<%= @folder.name %></span>
-      </div>
-      <div class="new-project-btn-div col-xs-3">
-        <%= link_to new_trip_folder_path(@trip),
-                :class => 'btn btn-default new-project' do%>
-          <i class="fa fa-folder-o "></i> New Folder
-        <%- end -%>
+<div class="row">
+  <% @folder.maps.each do |map| %>
+    <div class="col-xs-4">
+      <div class="panel panel-default folder-display-panel" data-folder-path="<%=trip_folder_map_path(:trip_id => @trip.name,:folder_id => @folder.name, :id => map.name)%>">
+        <div class="panel-body folders-display-body">
+          <div class="row">
+            <div class="col-xs-12">
+              <%= raw map.description %>
+            </div>
+            <div class="col-xs-12 description">
+                <%= map.updated_at %>
+            </div>
+          </div>
+        </div>
+        <div class="panel-footer"><h5><%= map.name.capitalize %></h5></div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-sm-3">
-        <ul class="nav nav-pills nav-stacked custom-sidebar">
-          <li><%= link_to 'Descriptions',
-              trip_folder_path(:trip_id => @trip.name, :id => @folder.name) %>
-          </li>
-          <li class="sidebar-active"><%= link_to 'Maps',
-              trip_folder_maps_path(:trip_id => @trip.name, :folder_id => @folder.name) %>
-          </li>
-          <li><%= link_to 'Reminders',
-              trip_folder_reminders_path(:trip_id => @trip.name, :folder_id => @folder.name) %>
-          </li>
-          <li><%= link_to 'Timeline',
-              activity_trip_folder_path(:trip_id => @trip.name, :id => @folder.name) %>
-          </li>
-          <li><a href="">Cost</a></li>
-          <li><%= link_to 'Photos',
-              trip_folder_photos_path(:trip_id => @trip.name, :folder_id => @folder.name) %>
-          </li>
-          <li><a href="#">Videos</a></li>
-        </ul>
-      </div>
-      <div class="col-sm-9">
-        <div class="row">
-          <% @folder.maps.each do |map| %>
-            <div class="col-xs-4">
-              <div class="panel panel-default folder-display-panel" data-folder-path="<%=trip_folder_map_path(:trip_id => @trip.name,:folder_id => @folder.name, :id => map.name)%>">
-                <div class="panel-body folders-display-body">
-                  <div class="row">
-                    <div class="col-xs-12">
-                      <%= raw map.description %>
-                    </div>
-                    <div class="col-xs-12 description">
-                        <%= map.updated_at %>
-                    </div>
-                  </div>
-                </div>
-                <div class="panel-footer"><h5><%= map.name.capitalize %></h5></div>
-              </div>
-            </div>
-          <% end %>
-            <div class="col-sm-4">
-              <div class="panel panel-default ">
-                <div class="panel-body">
-                    New Folder
-                    <%= link_to new_trip_folder_map_path(:trip_id => @trip.name, :folder_id => @folder.name), :method => :get, :class => '', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
-                       <i class="fa fa-plus fa-2x"></i>
-                    <%- end -%>
-                </div>
-                <div class="panel-footer">Panel footer</div>
-              </div>
-            </div>
+  <% end %>
+    <div class="col-sm-4">
+      <div class="panel panel-default ">
+        <div class="panel-body">
+            New Folder
+            <i class="fa fa-plus fa-2x" id="new-map"></i>
         </div>
+        <div class="panel-footer">Panel footer</div>
       </div>
-    </div>   
-  </div>
+    </div>
+</div>
 <script>
   $(function(){
-    $(document).on('click','.folder-display-panel', function(){
-      window.location.href = $(this).attr("data-folder-path");
-    })
+    // $(document).on('click','.folder-display-panel', function(){
+    //    $.pjax({
+    //     url: $(this).attr("data-folder-path"),
+    //     container: '#pjax-container'
+    //   }); 
+    // });
+
+    $(document).on('click','#new-map', function(){
+      $.pjax({
+        url: "<%= new_trip_folder_map_path(:trip_id => @trip.name, :folder_id => @folder.name) %>",
+        container: '#pjax-container'
+      }); 
+    });
+
   })
 
 </script>

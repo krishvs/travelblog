@@ -8,6 +8,11 @@ class PhotosController < ApplicationController
     @trip = Trip.find_by_name(params[:trip_id])
     @folder = @trip.folders.find_by_name(params[:folder_id])
     @photos = @folder.photos
+    if request.headers['X-PJAX']
+      render :layout => false
+    else
+      render :layout => "folder"
+    end
   end
 
   # GET /photos/1
@@ -74,12 +79,14 @@ class PhotosController < ApplicationController
       @trip = Trip.find_by_name(params[:trip_id])
       @folder = @trip.folders.find_by_name(params[:folder_id]) 
       @photo = @folder.photos.find_by_name(params[:id])
+      @model_link = "photo"
     end
 
     def set_photo_id
       @trip = Trip.find_by_id(params[:trip_id])
       @folder = @trip.folders.find_by_id(params[:folder_id]) 
       @photo = @folder.photos.find_by_id(params[:id])
+      @model_link = "photo"
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

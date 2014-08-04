@@ -9,6 +9,11 @@ class DescriptionsController < ApplicationController
     @trip = Trip.find_by_name(params[:trip_id])
     @folder = @trip.folders.find_by_name(params[:folder_id])
     @descriptions = @folder.descriptions
+    if request.headers['X-PJAX']
+      render :layout => false
+    else
+      render :layout => "folder"
+    end
   end
 
   # GET /descriptions/1
@@ -23,6 +28,8 @@ class DescriptionsController < ApplicationController
     @description = Description.new
     if request.headers['X-PJAX']
       render :layout => false
+    else
+      render :layout => "folder"
     end
   end
 
@@ -86,12 +93,14 @@ class DescriptionsController < ApplicationController
       @trip = Trip.find_by_name(params[:trip_id])
       @folder = @trip.folders.find_by_name(params[:folder_id]) 
       @description = @folder.descriptions.find_by_title(params[:id])
+      @model_link = "description"
     end
 
     def set_description_id
       @trip = Trip.find_by_id(params[:trip_id])
       @folder = @trip.folders.find_by_id(params[:folder_id]) 
       @description = @folder.descriptions.find_by_id(params[:id])
+      @model_link = "description"
     end
 
 

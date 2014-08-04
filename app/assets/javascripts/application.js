@@ -19,6 +19,7 @@
 //= require masonry/index
 //= require imagesloaded/index
 //= require momentjs/index
+//= require lightbox/lightbox.min.js
 //= require bootstrap
 
 //= require_tree .

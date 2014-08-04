@@ -10,11 +10,21 @@ class MapsController < ApplicationController
     @trip = Trip.find_by_name(params[:trip_id])
     @folder = @trip.folders.find_by_name(params[:folder_id])
     @maps = @folder.maps
+    if request.headers['X-PJAX']
+      render :layout => false
+    else
+      render :layout => "folder"
+    end
   end
 
   # GET /maps/1
   # GET /maps/1.json
   def show
+    if request.headers['X-PJAX']
+      render :layout => false
+    else
+      render :layout => "folder"
+    end
   end
 
   # GET /maps/new
@@ -85,12 +95,14 @@ class MapsController < ApplicationController
       @trip = Trip.find_by_name(params[:trip_id])
       @folder = @trip.folders.find_by_name(params[:folder_id]) 
       @map = @folder.maps.find_by_name(params[:id])
+      @model_link = "map"
     end
 
     def set_map_id
       @trip = Trip.find_by_id(params[:trip_id])
       @folder = @trip.folders.find_by_id(params[:folder_id]) 
       @map = @folder.maps.find_by_id(params[:id])
+      @model_link = "map"
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

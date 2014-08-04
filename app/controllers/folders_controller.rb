@@ -1,7 +1,6 @@
 
 class FoldersController < ApplicationController
   before_action :set_folder_id, only: [:update]
-  layout "activity", only: [:activity]
   before_action :set_folder_name, only: [:edit, :destroy]
 
   # GET /folders
@@ -31,6 +30,11 @@ class FoldersController < ApplicationController
     @trip = Trip.find_by_name(params[:trip_id])
     @folder = @trip.folders.find_by_name(params[:id])
     @activities = PublicActivity::Activity.order("created_at desc").where(owner_type: "Folder", owner_id: @folder.id, trackable_type: ['Description','Map','Reminder']).all
+    if request.headers['X-PJAX']
+      render :layout => false
+    else
+      render :layout => "folder"
+    end
   end
 
   def timeline
@@ -118,11 +122,13 @@ class FoldersController < ApplicationController
     def set_folder_name
       @trip = Trip.find_by_name(params[:trip_id])
       @folder = @trip.folders.find_by_name(params[:id])  
+      @models_link = "description"
     end
 
     def set_folder_id
       @trip = Trip.find(params[:trip_id])
       @folder = @trip.folders.find(params[:id])  
+      @models_link = "description"
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
