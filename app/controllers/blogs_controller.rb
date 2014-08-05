@@ -41,5 +41,8 @@ class BlogsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_blog
       @user = User.find_by_domain(request.host)
+      unless @user
+        redirect_to root_path
+      end
     end
 end
