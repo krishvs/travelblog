@@ -33,6 +33,8 @@ gem 'timelineJS-rails', '~> 1.1.5'
 gem 'cancancan', '~> 1.9'
 gem 'liquid'
 gem 'ckeditor'
+gem 'acts_as_commentable_with_threading'
+
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
 

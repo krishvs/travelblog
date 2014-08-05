@@ -1,0 +1,7 @@
+module CommentHelper
+	module Comments
+		def addComments
+			Rails.logger.info "I am in comments "
+		end
+	end
+end
