@@ -45,6 +45,7 @@ class DescriptionsController < ApplicationController
     @trip = Trip.find_by_id(params[:trip_id])
     @folder = @trip.folders.find_by_id(params[:folder_id])
     @description = @folder.descriptions.create(description_params)
+    @description.user = current_user
     Rails.logger.debug ">>> The valuej of the params is #{description_params[:mode]}  node is #{description_params.inspect}"
     if description_params[:mode]  
       Rails.logger.debug ">>>> I am creating a description here >>>>>>>>> in the public acticity "

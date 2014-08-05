@@ -5,8 +5,9 @@ Rails.application.routes.draw do
 
   get 'homes/index'
 
-  resources :descriptions
-  
+
+  resources :blogs, :path => 'articles'
+
   resources :trips do
     get 'collaborators', on: :member
     get 'add_collaborator', on: :member
@@ -23,8 +24,6 @@ Rails.application.routes.draw do
     end
     resources :user_actions
   end
-
-  resources :addresses
 
   resources :documents
 
