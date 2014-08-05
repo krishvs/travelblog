@@ -31,6 +31,8 @@ gem 'barometer'
 gem 'public_activity'
 gem 'timelineJS-rails', '~> 1.1.5'
 gem 'cancancan', '~> 1.9'
+gem 'liquid'
+gem 'ckeditor'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
 

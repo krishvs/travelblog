@@ -15,6 +15,7 @@
 //= require turbolinks
 //= require pjax/pjax
 //= require medium/medium
+//= require ckeditor/init
 //= require gmaps/gmaps
 //= require masonry/index
 //= require imagesloaded/index

@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
 
+  mount Ckeditor::Engine => '/ckeditor'
   resources :actions
 
   get 'homes/index'
 
   resources :descriptions
-
-
+  
   resources :trips do
     get 'collaborators', on: :member
     get 'add_collaborator', on: :member

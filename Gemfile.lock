@@ -76,6 +76,9 @@ GEM
       mime-types (>= 1.16)
     choc_mool (0.0.1)
     chronic (0.10.2)
+    ckeditor (4.1.0)
+      mime-types
+      orm_adapter (~> 0.5.0)
     coderay (1.1.0)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
@@ -110,6 +113,7 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.1)
     jwt (1.0.0)
+    liquid (2.6.1)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -243,12 +247,14 @@ DEPENDENCIES
   bundler
   cancancan (~> 1.9)
   carrierwave
+  ckeditor
   coffee-rails (~> 4.0.0)
   devise!
   font-awesome-rails
   geocoder
   jbuilder (~> 2.0)
   jquery-rails
+  liquid
   mini_magick
   mysql2
   omniauth

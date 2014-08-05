@@ -4,14 +4,20 @@
       <%= f.text_field :title, :class => 'text-field form-control nooutline', :placeholder => "Title" %>
     </div>
   </div>
-  <div class="row">
+  <!-- <div class="row">
       <div id="post_description_div" class="col-md-10 col-md-offset-1 post-form-medium"></div>
       <%= f.text_area :description, :class => 'text-field form-control', :style => "display:none;" %>
-  </div>
+  </div> -->
   <div class="row">
     <div class="col-md-10 col-md-offset-2">
       <%= f.number_field :mode, :class => 'text-field form-control', :value => 1, :style => "display:none;" %>
-    </div>
+  </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-10 col-md-offset-2">
+      <%= f.cktext_area :description %>
+  </div>
   </div>
 
   <div class="row">
@@ -24,16 +30,16 @@
 <% end %>
 <script>
    $(function() {
-    var editor_description = new MediumEditor('#post_description_div',{
-      anchorInputPlaceholder: 'Start your adventure',
-      buttons: ['bold', 'italic', 'quote','superscript','subscript','unorderedlist','orderedlist','pre','indent','outdent', 'strikethrough'],
-      diffLeft: 25,
-      diffTop: 10,
-      firstHeader: 'h1',
-      secondHeader: 'h2',
-      delay: 1000,
-      targetBlank: true,
-    });
+    // var editor_description = new MediumEditor('#post_description_div',{
+    //   anchorInputPlaceholder: 'Start your adventure',
+    //   buttons: ['bold', 'italic', 'quote','superscript','subscript','unorderedlist','orderedlist','pre','indent','outdent', 'strikethrough'],
+    //   diffLeft: 25,
+    //   diffTop: 10,
+    //   firstHeader: 'h1',
+    //   secondHeader: 'h2',
+    //   delay: 1000,
+    //   targetBlank: true,
+    // });
 
 
     $(".post-form").submit(function( event ) {
