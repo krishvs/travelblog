@@ -1,7 +1,7 @@
 class AddressesController < ApplicationController
 
   before_filter :require_user_signed_in, only: [:new, :edit, :create, :update, :destroy]
-
+  layout false
   before_action :set_address_id, only: [:update]
   before_action :set_address_name, only: [ :show, :edit, :destroy]
 

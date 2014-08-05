@@ -72,7 +72,7 @@
               <div class="panel panel-default ">
                 <div class="panel-body">
                     New Description
-                     <i class="fa fa-plus fa-2x" id="new-description"></i>
+                     <i class="fa fa-plus fa-2x pjax_links" id="new-description" data-folder-path="<%= new_trip_folder_description_path(:trip_id => @trip.name, :folder_id => @folder.name) %>"></i>
                 </div>
                 <div class="panel-footer">Panel footer</div>
               </div>
@@ -89,7 +89,7 @@
   </div>
 <script>
   $(function(){
-    $(document).on('click','.folder-display-panel, .sidebar-links', function(){
+    $(document).on('click','.folder-display-panel, .sidebar-links, .pjax_links', function(){
       $.pjax({
         url: $(this).attr("data-folder-path"),
         container: '#pjax-container'
@@ -118,13 +118,6 @@
 
     $('.time').each(function(){
       $(this).html('updated '+moment($(this).html(), "YYYYMMDD").fromNow());
-    });
-
-    $(document).on('click','#new-description', function(){
-      $.pjax({
-        url: "<%= new_trip_folder_description_path(:trip_id => @trip.name, :folder_id => @folder.name) %>",
-        container: '#pjax-container'
-      }); 
     });
 
   })
