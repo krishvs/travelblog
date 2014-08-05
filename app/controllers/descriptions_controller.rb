@@ -1,6 +1,7 @@
 class DescriptionsController < ApplicationController
   before_action :set_description_id, only: [:update]
   layout "description", only: [:new, :edit]
+  layout "blog", only: [:show]
   before_action :set_description_name, only: [ :show, :edit, :destroy]
 
   # GET /descriptions
@@ -19,6 +20,7 @@ class DescriptionsController < ApplicationController
   # GET /descriptions/1
   # GET /descriptions/1.json
   def show
+
   end
 
   # GET /descriptions/new
