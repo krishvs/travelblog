@@ -7,7 +7,7 @@ class PhotosController < ApplicationController
   def index
     @trip = Trip.find_by_name(params[:trip_id])
     @folder = @trip.folders.find_by_name(params[:folder_id])
-    @photos = @folder.photos
+    @photos = @folder.photos.group_by{ |photo| photo.album }
     if request.headers['X-PJAX']
       render :layout => false
     else
@@ -91,6 +91,6 @@ class PhotosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def photo_params
-      params.require(:photo).permit(:name, :mode, :folder_id, :image)
+      params.require(:photo).permit(:name, :album, :mode, :folder_id, :image)
     end
 end

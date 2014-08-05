@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140805121630) do
+ActiveRecord::Schema.define(version: 20140805154914) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(version: 20140805121630) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image"
+    t.string   "album"
   end
 
   add_index "photos", ["folder_id"], name: "index_photos_on_folder_id", using: :btree
