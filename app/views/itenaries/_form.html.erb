@@ -1,0 +1,27 @@
+<%= form_for [@trip,@folder,@itenary], :html => { :class => 'form-horizontal form-model post-form' } do |f| %>
+  <div class="form-group">
+    <%= f.label :name, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.text_field :name, :class => 'text-field form-control' %>
+    </div>
+  </div>
+   <div class="form-group">
+    <%= f.label :mode, :class => 'control-label col-md-2', :value => "1" %>
+    <div class="col-md-10">
+      <%= f.number_field :mode, :class => 'text-field form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :short_description, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.text_area :short_description, :class => 'text-field form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class='col-md-offset-2 col-md-10'>
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>
+
+

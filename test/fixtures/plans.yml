@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date_time: 2014-08-06 14:27:00
+  name: MyString
+  itenary_id: 1
+  short_description: MyText
+
+two:
+  date_time: 2014-08-06 14:27:00
+  name: MyString
+  itenary_id: 1
+  short_description: MyText

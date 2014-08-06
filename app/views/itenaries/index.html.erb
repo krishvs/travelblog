@@ -1,0 +1,31 @@
+<%- model_class = Folder -%>
+  <div class="col-sm-9">
+    <div class="row">
+      <% @itenaries.each do |itenary| %>
+        <div class="col-xs-4">
+          <div class="panel panel-default folder-display-panel" data-folder-path="<%=trip_folder_itenary_path(:trip_id => @trip.name,:folder_id => @folder.name, :id => itenary.name)%>">
+            <div class="panel-body folders-display-body">
+              <div class="row">
+                <div class="col-xs-12">
+                  <%= raw itenary.short_description %>
+                </div>
+                <div class="col-xs-12 description">
+                    <%= itenary.updated_at %>
+                </div>
+              </div>
+            </div>
+            <div class="panel-footer"><h5><%= itenary.name.capitalize %></h5></div>
+          </div>
+        </div>
+      <% end %>
+        <div class="col-sm-4">
+          <div class="panel panel-default ">
+            <div class="panel-body">
+                New Itenary
+                <i class="fa fa-plus fa-2x pjax_links" id="new-description" data-folder-path="<%= new_trip_folder_itenary_path(:trip_id => @trip.name, :folder_id => @folder.name) %>"></i>
+            </div>
+            <div class="panel-footer">Panel footer</div>
+          </div>
+        </div>
+    </div>
+  </div>  

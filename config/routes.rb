@@ -21,7 +21,11 @@ Rails.application.routes.draw do
       resources :costs
       resources :reminders
       resources :photos
+      resources :itenaries do
+        resources :plans 
+      end
     end
+    
     resources :user_actions
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140805154914) do
+ActiveRecord::Schema.define(version: 20140806092854) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -116,6 +116,16 @@ ActiveRecord::Schema.define(version: 20140805154914) do
 
   add_index "folders_folders", ["folder_id"], name: "index_folders_folders_on_folder_id", using: :btree
 
+  create_table "itenaries", force: true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.integer  "folder_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "short_description"
+    t.integer  "mode"
+  end
+
   create_table "maps", force: true do |t|
     t.string   "name"
     t.integer  "mode"
@@ -137,6 +147,15 @@ ActiveRecord::Schema.define(version: 20140805154914) do
   end
 
   add_index "photos", ["folder_id"], name: "index_photos_on_folder_id", using: :btree
+
+  create_table "plans", force: true do |t|
+    t.datetime "date_time"
+    t.string   "name"
+    t.integer  "itenary_id"
+    t.text     "short_description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "reminders", force: true do |t|
     t.string   "name"

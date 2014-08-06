@@ -35,6 +35,9 @@
           </li>
           <li><a class="sidebar-links" data-folder-path="<%= trip_folder_photos_path(:trip_id => @trip.name, :folder_id => @folder.name) %>" >Photos</a>
           </li>
+          <li data-active-sidebar="itenary">
+            <a class="sidebar-links" data-folder-path="<%= trip_folder_itenaries_path(:trip_id => @trip.name, :folder_id => @folder.name) %>" >Itenary</a>
+          </li>
           <li><a href="">Cost</a></li>
           <li><a href="#">Videos</a></li>
         </ul>

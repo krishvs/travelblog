@@ -87,10 +87,7 @@ class MapsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_map
-      @map = Map.find(params[:id])
-    end
-
+    
     def set_map_name
       @trip = Trip.find_by_name(params[:trip_id])
       @folder = @trip.folders.find_by_name(params[:folder_id]) 
