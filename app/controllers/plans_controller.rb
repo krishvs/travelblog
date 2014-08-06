@@ -16,6 +16,11 @@ class PlansController < ApplicationController
   # GET /plans/1
   # GET /plans/1.json
   def show
+    if request.headers['X-PJAX']
+      render :layout => false
+    else
+      render :layout => "folder"
+    end
   end
 
   # GET /plans/new
