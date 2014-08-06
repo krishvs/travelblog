@@ -1,16 +1,17 @@
 class BlogsController < ApplicationController
-  layout "blog"
   before_action :set_blog, only: [:show, :index]
 
   # GET /blogs
   # GET /blogs.json
   def index
     @posts = @user.descriptions.all
+    render :layout => "blog_index"
   end
 
   # GET /blogs/1
   # GET /blogs/1.json
   def show
+    render :layout => "blog_article"
   end
 
 
