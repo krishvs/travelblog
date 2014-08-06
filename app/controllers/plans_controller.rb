@@ -1,10 +1,16 @@
 class PlansController < ApplicationController
-  before_action :set_plan, only: [:show, :edit, :update, :destroy]
+  before_filter :require_user_signed_in, only: [:new, :edit, :create, :update, :destroy]
+  layout false
+  before_action :set_plan_id, only: [:update]
+  before_action :set_plan_name, only: [ :show, :edit, :destroy]
 
   # GET /plans
   # GET /plans.json
   def index
-    @plans = Plan.all
+    @trip = Trip.find_by_name(params[:trip_id])
+    @folder = @trip.folders.find_by_name(params[:folder_id])
+    @itenary = @folders.itenaries.find_by_name(params[:itenary_id])
+    @plans = @itenary.plans
   end
 
   # GET /plans/1
@@ -14,6 +20,9 @@ class PlansController < ApplicationController
 
   # GET /plans/new
   def new
+    @trip = Trip.find_by_name(params[:trip_id])
+    @folder = @trip.folders.find_by_name(params[:folder_id])
+    @itenary = @folder.itenaries.find_by_name(params[:itenary_id])
     @plan = Plan.new
   end
 
@@ -24,12 +33,15 @@ class PlansController < ApplicationController
   # POST /plans
   # POST /plans.json
   def create
-    @plan = Plan.new(plan_params)
+    @trip = Trip.find_by_id(params[:trip_id])
+    @folder = @trip.folders.find_by_id(params[:folder_id])
+    @itenary = @folder.itenaries.find_by_id(params[:itenary_id])
+    @plan = @itenary.plans.create(plan_params)
 
     respond_to do |format|
       if @plan.save
-        format.html { redirect_to @plan, notice: 'Plan was successfully created.' }
-        format.json { render :show, status: :created, location: @plan }
+        format.html { redirect_to trip_folder_itenary_path(:trip_id => @trip.name,:folder_id => @folder.name, :id => @itenary.name), notice: 'Plan was successfully created.' }
+        format.json { render :show, status: :created, location: trip_folder_itenary_path(:trip_id => @trip.name,:folder_id => @folder.name, :id => @itenary.name) }
       else
         format.html { render :new }
         format.json { render json: @plan.errors, status: :unprocessable_entity }
@@ -63,8 +75,18 @@ class PlansController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_plan
-      @plan = Plan.find(params[:id])
+     def set_plan_name
+      @trip = Trip.find_by_name(params[:trip_id])
+      @folder = @trip.folders.find_by_name(params[:folder_id]) 
+      @itenary = @folder.itenaries.find_by_name(params[:itenary_id])
+      @plan = @itenary.plans.find_by_name(params[:id])
+    end
+
+    def set_plan_id
+      @trip = Trip.find_by_id(params[:trip_id])
+      @folder = @trip.folders.find_by_id(params[:folder_id]) 
+      @itenary = @folder.itenaries.find_by_id(params[:itenary_id])
+      @plan = @itenary.plans.find_by_id(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
