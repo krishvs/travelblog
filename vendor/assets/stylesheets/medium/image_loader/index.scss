@@ -146,15 +146,15 @@ q, blockquote {
         cursor: pointer;
         &.mediumInsert-imageRemove {
           right: 0;
-          background-image: url(../images/remove.png);
+          background-image: url(remove.png);
         }
         &.mediumInsert-imageResizeSmaller {
           right: 31px;
-          background-image: url(../images/resize-smaller.png);
+          background-image: url(resize-smaller.png);
         }
         &.mediumInsert-imageResizeBigger {
           @extend .mediumInsert-imageResizeSmaller;
-          background-image: url(../images/resize-bigger.png);
+          background-image: url(resize-bigger.png);
         }
       }
       &:first-child:after {

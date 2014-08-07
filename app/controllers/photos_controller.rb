@@ -36,15 +36,24 @@ class PhotosController < ApplicationController
   def create
     @trip = Trip.find_by_id(params[:trip_id])
     @folder = @trip.folders.find_by_id(params[:folder_id])
-    @photo = @folder.photos.create(photo_params)
-
-    respond_to do |format|
+    if request.xhr?
+      @photo = @folder.photos.create({ :image => params[:file] })
       if @photo.save
-        format.html { redirect_to trip_folder_photos_path(:trip_id => @trip.name,:folder_id => @folder.name ), notice: 'Photo was successfully created.' }
-        format.json { render :show, status: :created, location: trip_folder_photos_path(:trip_id => @trip.name,:folder_id => @folder.name ) }
+        render json: @photo.image.url 
       else
-        format.html { render :new }
-        format.json { render json: @photo.errors, status: :unprocessable_entity }
+        render json: @photo.errors, status: :unprocessable_entity
+      end
+    else
+      @photo = @folder.photos.create(photo_params)
+      respond_to do |format|
+        if @photo.save
+          format.html { redirect_to trip_folder_photos_path(:trip_id => @trip.name,:folder_id => @folder.name ), notice: 'Photo was successfully created.' }
+          format.json { render json: photo.image.url }
+          format.js { render json: photo.image.url }
+        else
+          format.html { render :new }
+          format.json { render json: @photo.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -91,6 +100,6 @@ class PhotosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def photo_params
-      params.require(:photo).permit(:name, :album, :mode, :folder_id, :image)
+        params.require(:photo).permit(:name, :album, :mode, :folder_id, :image)
     end
 end

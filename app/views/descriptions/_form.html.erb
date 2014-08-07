@@ -1,40 +1,38 @@
-<%= form_for [@trip,@folder,@description], :html => { :class => 'row post-form top-margin' } do |f| %>
-  <div class="row">
-    <div class="col-md-6 post-form-medium">
-      <%= f.text_field :title, :class => 'text-field form-control nooutline', :placeholder => "Title" %>
-    </div>
+  <h1 class="post-title text-center hyper lighter" contenteditable="true">Title</h1>
+  <div class="post-info text-center bordered-top col-md-2">
+      <time datetime="2013-10-24" class="post-time">24 Oct 2013</time>
+       on <span class="post-tags">design, ghost</span>
   </div>
-  <div class="row">
-    <div class="col-md-10 col-md-offset-2">
-      <%= f.number_field :mode, :class => 'text-field form-control', :value => 1, :style => "display:none;" %>
-  </div>
+  <div class="post-body bordered-bottom col-md-8" id="post_description">
+            
   </div>
 
-  <div class="row">
-    <div class="col-md-10 ">
-      <%= f.cktext_area :description %>
-  </div>
-  </div>
-
-  <div class="row">
-    <div class='col-md-offset-2 col-md-10'>
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                  trip_folder_descriptions_path(:trip_id => @trip.name, :folder_id => @folder.name), :class => 'btn btn-default' %>
-    </div>
-  </div>
+<%= form_for [@trip,@folder,@description] do |f| %>
+  <%= f.text_field :title, :style => "display:none;"%>
+  <%= f.text_field :description , :style => "display:none;" %>
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+              trip_folder_descriptions_path(:trip_id => @trip.name, :folder_id => @folder.name), :class => 'btn btn-default' %>
 <% end %>
 <script>
    $(function() {
-    // var editor_description = new MediumEditor('#post_description_div',{
-    //   anchorInputPlaceholder: 'Start your adventure',
-    //   buttons: ['bold', 'italic', 'quote','superscript','subscript','unorderedlist','orderedlist','pre','indent','outdent', 'strikethrough'],
-    //   diffLeft: 25,
-    //   diffTop: 10,
-    //   firstHeader: 'h1',
-    //   secondHeader: 'h2',
-    //   delay: 1000,
-    //   targetBlank: true,
-    // });
+    var editor_description = new MediumEditor('#post_description',{
+      anchorInputPlaceholder: 'Start your adventure',
+      buttons: ['bold', 'italic', 'quote','superscript','subscript','unorderedlist','orderedlist','pre','indent','outdent', 'strikethrough'],
+      diffLeft: 25,
+      diffTop: 10,
+      firstHeader: 'h1',
+      secondHeader: 'h2',
+      delay: 1000,
+      targetBlank: true,
+    });
+     $('#post_description').mediumInsert({
+        editor: editor_description,
+        addons: {
+          images: {
+            "imagesUploadScript": "<%=trip_folder_photos_path(:trip_id => @trip.id,:folder_id => @folder.id)%>"
+          }
+        }
+      });
   });
 </script>

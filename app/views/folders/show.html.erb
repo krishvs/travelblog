@@ -75,7 +75,9 @@
               <div class="panel panel-default ">
                 <div class="panel-body">
                     New Description
-                     <i class="fa fa-plus fa-2x pjax_links" id="new-description" data-folder-path="<%= new_trip_folder_description_path(:trip_id => @trip.name, :folder_id => @folder.name) %>"></i>
+                    <%= link_to new_trip_folder_description_path(:trip_id => @trip.name, :folder_id => @folder.name), :method => :get, :class => '', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
+                       <i class="fa fa-plus fa-2x"></i>
+                    <%- end -%>
                 </div>
                 <div class="panel-footer">Panel footer</div>
               </div>

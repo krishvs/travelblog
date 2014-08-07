@@ -31,7 +31,7 @@ class DescriptionsController < ApplicationController
     if request.headers['X-PJAX']
       render :layout => false
     else
-      render :layout => "folder"
+      render :layout => "blog_article"
     end
   end
 

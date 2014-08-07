@@ -332,7 +332,7 @@
     setEvents: function () {
       var that = this,
           $el = $.fn.mediumInsert.insert.$el;
-
+      
       $el.on('selectstart', '.mediumInsert', function (e) {
         e.preventDefault();
         return false;
@@ -397,7 +397,7 @@
       $el.on('click', '.mediumInsert-buttons a.mediumInsert-buttonsShow', function () {
         var $options = $(this).siblings('.mediumInsert-buttonsOptions'),
             $placeholder = $(this).parent().siblings('.mediumInsert-placeholder');
-
+        console.log('The value of this is ',$(this))
         if ($(this).hasClass('active')) {
           $(this).removeClass('active');
           $options.hide();

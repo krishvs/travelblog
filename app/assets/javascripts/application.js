@@ -14,11 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require pjax/pjax
-//= require medium/medium
-//= require ckeditor/init
 //= require gmaps/gmaps
-//= require masonry/index
-//= require imagesloaded/index
 //= require momentjs/index
 //= require lightbox/lightbox.min.js
 //= require bootstrap
