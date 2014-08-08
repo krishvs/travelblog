@@ -5,6 +5,14 @@
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxDmirbK9yzvj9SIUK5ZwLFnDo1c-ksbY"></script>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'graphs/d3', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'graphs/nvd3', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'graphs/src/tooltip', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'graphs/src/utils', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'graphs/src/models/legend', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'graphs/src/models/axis', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'graphs/src/models/multiBar', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'graphs/src/models/multiBarChart', 'data-turbolinks-track' => true %>
   <%= stylesheet_link_tag    'timelineJS/timeline', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'timelineJS/embed', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>

@@ -56,9 +56,64 @@
         </div>
        </div>
       </div>
-  </div>   
+  </div>
 </div>
+<div class="row">
+     <div id="chart1" class='with-3d-shadow with-transitions col-xs-12'>
+      <svg></svg>
+    </div>
+   </div>   
+<script>
+  var chart_data = [];
+  chart_data[0] = {
+    key: "<%=@itenary.name%>",
+    values:[]
+  }
+  <% @itenary.plans.each_with_index do |plan,index| %>
+      <% if index == 0 %>
+        var x = 0
+      <% else %>
+        var x = "<%=index%>"
+      <% end %>
 
-<div class="col-sm-9">
-	
-</div>
+      chart_data[0]['values'].push({
+        x : x,
+        y : "<%=plan.price_cent ? plan.price_cent : 0 %>"
+      });
+  <% end %>
+  console.log('The value of the chart_data is ',chart_data);
+  var chart;
+  nv.addGraph(function() {
+      chart = nv.models.multiBarChart()
+        .barColor(d3.scale.category20().range())
+        .margin({bottom: 100})
+        .transitionDuration(300)
+        .delay(0)
+        .rotateLabels(45)
+        .groupSpacing(0.1)
+        ;
+
+      chart.multibar
+        .hideable(true);
+
+      chart.reduceXTicks(false).staggerLabels(true);
+
+      chart.xAxis
+          .axisLabel("Current Index")
+          .showMaxMin(true)
+          .tickFormat(d3.format(',.6f'));
+
+      chart.yAxis
+          .tickFormat(d3.format(',.1f'));
+
+      d3.select('#chart1 svg')
+          .datum(chart_data)
+         .call(chart);
+
+      nv.utils.windowResize(chart.update);
+
+      chart.dispatch.on('stateChange', function(e) { nv.log('New State:', JSON.stringify(e)); });
+
+      return chart;
+  });
+</script>
