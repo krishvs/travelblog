@@ -26,6 +26,7 @@ class FoldersController < ApplicationController
     end
   end
 
+
   def activity
     @trip = Trip.find_by_name(params[:trip_id])
     @folder = @trip.folders.find_by_name(params[:id])

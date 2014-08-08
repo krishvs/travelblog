@@ -22,7 +22,17 @@
             <div class="col-xs-4">
               <div class="panel panel-default folder-display-panel" data-folder-path="<%=trip_folder_itenary_plan_path(:trip_id => @trip.name,:folder_id => @folder.name, :itenary_id => @itenary.name, :id => plan.name)%>">
                 <div class="panel-body folders-display-body">
-                  <div class="row">
+                  <div class="overlay-div row">
+                    <div class="col-xs-2 col-xs-offset-4 add-margin">
+                      <%= link_to trip_folder_itenary_plan_path(:trip_id => @trip.name,:folder_id => @folder.name,:itenary_id => @itenary.name, :id => plan.name ), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => '', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
+                       <i class="fa fa-trash-o fa-2x"></i>
+                      <%- end -%>
+                    </div>
+                     <div class="col-xs-2 add-margin">
+                      <i class="fa fa-pencil-square-o fa-2x custom-edit-icon" id="" data-folder-edit-path="<%= edit_trip_folder_itenary_plan_path(:trip_id => @trip.name,:folder_id => @folder.name,:itenary_id => @itenary.name, :id => plan.name )%>"></i> 
+                    </div>
+                  </div>
+                  <div class="row content-body">
                     <div class="col-xs-12">
                       <%= raw plan.name %>
                     </div>

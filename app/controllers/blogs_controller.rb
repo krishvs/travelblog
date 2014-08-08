@@ -11,7 +11,12 @@ class BlogsController < ApplicationController
   # GET /blogs/1
   # GET /blogs/1.json
   def show
-    render :layout => "blog_article"
+    @blog = find_description
+    if @blog
+      render :layout => "blog_article"
+    else
+      redirect_to blogs_path
+    end
   end
 
 
@@ -46,4 +51,9 @@ class BlogsController < ApplicationController
         redirect_to root_path
       end
     end
+
+    def find_description
+      @user.descriptions.find_by_title(params[:id])
+    end
+
 end

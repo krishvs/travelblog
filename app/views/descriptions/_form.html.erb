@@ -1,4 +1,4 @@
-  <h1 class="post-title text-center hyper lighter" contenteditable="true">Title</h1>
+  <h1 class="post-title text-center hyper lighter" id="post_title" contenteditable="true">Title</h1>
   <div class="post-info text-center bordered-top col-md-2">
       <time datetime="2013-10-24" class="post-time">24 Oct 2013</time>
        on <span class="post-tags">design, ghost</span>
@@ -7,7 +7,7 @@
             
   </div>
 
-<%= form_for [@trip,@folder,@description] do |f| %>
+<%= form_for [@trip,@folder,@description], :html => { :class => 'post-form' } do |f| %>
   <%= f.text_field :title, :style => "display:none;"%>
   <%= f.text_field :description , :style => "display:none;" %>
   <%= f.submit nil, :class => 'btn btn-primary' %>
@@ -18,7 +18,7 @@
    $(function() {
     var editor_description = new MediumEditor('#post_description',{
       anchorInputPlaceholder: 'Start your adventure',
-      buttons: ['bold', 'italic', 'quote','superscript','subscript','unorderedlist','orderedlist','pre','indent','outdent', 'strikethrough'],
+      buttons: ['bold', 'italic', 'underline', 'anchor', 'header1', 'header2', 'quote','superscript','subscript','unorderedlist','orderedlist','pre','indent','outdent', 'strikethrough'],
       diffLeft: 25,
       diffTop: 10,
       firstHeader: 'h1',
@@ -26,6 +26,7 @@
       delay: 1000,
       targetBlank: true,
     });
+    window.edi = editor_description
      $('#post_description').mediumInsert({
         editor: editor_description,
         addons: {
@@ -34,5 +35,16 @@
           }
         }
       });
+
+     $(".post-form").submit(function( event ) {
+        event.preventDefault();
+        $("#description_description").val(editor_description.serialize()['post_description']['value']);
+        $("#description_title").val($('#post_title').html());
+        console.log('The value is ',$("#description_description").val());
+        console.log('The value is ',$("#description_title").val());
+        this.submit();
+
+      });
+
   });
 </script>
