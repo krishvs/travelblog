@@ -25,6 +25,8 @@ Rails.application.routes.draw do
       resources :itenaries do
         resources :plans do
           get 'add_description', on: :member
+          get 'add_discussion', on: :member
+          get 'discussions', on: :member
         end
       end
     end

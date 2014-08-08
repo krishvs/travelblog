@@ -23,30 +23,7 @@
     </div>
   </div>
 <% end %>
-<div class="row">
-  <input type="text" placeholder="name of description" name="descriptions" id="description_name">
-  <button id="add_descripition" class="btn btn-primary">Add Description</button>
-</div>
-<script>
-  var url = "<%= add_description_trip_folder_itenary_plan_path(:trip_id => @trip.name, :folder_id => @folder.name, :itenary_id =>@itenary.name, :id => @plan.name) %>"
-  $(function(){
-    $('#add_description').click(function(){
-      $.ajax({
-        url:url,
-        data: {
-          description: $('#description_name').val()
-        },
-        contentType: 'application/json; charset=utf-8',
-        success: function(){
-          console.log('There was success in adding user');
-        },
-        error: function(err){
-          console.log('Tehre was an error in adding the user ',err);
-        }
-      })
-    });
-  })
-</script>
+
 
 
 

@@ -1,16 +1,49 @@
-<p id="notice"><%= notice %></p>
+<div class="col-xs-9">
+	<div class="row">
+		<div class="col-xs-12">
+			<p id="notice"><%= notice %></p>
+			<p>
+			  <strong>Date time:</strong>
+			  <%= @plan.date_time %>
+			</p>
 
-<p>
-  <strong>Date time:</strong>
-  <%= @plan.date_time %>
-</p>
+			<p>
+			  <strong>Name:</strong>
+			  <%= @plan.name %>
+			</p>
+			<p>
+			  <strong>Short description:</strong>
+			  <%= @plan.short_description %>
+			</p>
+		</div>
+		<div class="col-xs-12">
+		  <input type="text" placeholder="name of discussion" name="discussions" id="discussion_name">
+		  <button id="add_discussion" class="btn btn-primary">Start Discussion</button>
+		</div>
+		<div class="col-xs-12">
+			<i class="fa fa-plus fa-2x pjax_links" data-folder-path="<%=discussions_trip_folder_itenary_plan_path(:trip_id => @trip.name, :folder_id => @folder.name, :itenary_id =>@itenary.name, :id => @plan.name)%>" ></i>
+		</div>
+	</div>
+</div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @plan.name %>
-</p>
-<p>
-  <strong>Short description:</strong>
-  <%= @plan.short_description %>
-</p>
 
+<script>
+  var url = "<%= add_discussion_trip_folder_itenary_plan_path(:trip_id => @trip.name, :folder_id => @folder.name, :itenary_id =>@itenary.name, :id => @plan.name) %>"
+  $(function(){
+    $('#add_discussion').click(function(){
+      $.ajax({
+        url:url,
+        data: {
+          name: $('#discussion_name').val()
+        },
+        contentType: 'application/json; charset=utf-8',
+        success: function(){
+          console.log('There was success in adding user');
+        },
+        error: function(err){
+          console.log('Tehre was an error in adding the user ',err);
+        }
+      })
+    });
+  })
+</script>

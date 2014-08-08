@@ -2,7 +2,7 @@ class PlansController < ApplicationController
   before_filter :require_user_signed_in, only: [:new, :edit, :create, :update, :destroy]
   layout false
   before_action :set_plan_id, only: [:update]
-  before_action :set_plan_name, only: [ :show, :edit, :destroy, :add_description]
+  before_action :set_plan_name, only: [ :show, :edit, :destroy, :add_description, :add_discussion, :discussions]
 
   # GET /plans
   # GET /plans.json
@@ -39,6 +39,42 @@ class PlansController < ApplicationController
         Rails.logger.info ">>>>> No description #{params[:description]}"
         render :json => { :action => "descripiton_not_found" }
       end
+    end
+  end
+
+  def add_discussion
+    if request.xhr?
+      discussion = @folder.discussions.create({:name => params[:name]})
+      if discussion.save
+        descriptions = @plan.descriptions ? @plan.descriptions : []
+        descriptions.push(discussion.id)
+        if @plan.update_attributes({:descriptions => descriptions})  
+          Rails.logger.info ">>>>> Got a plan #{@plan.inspect}"
+          render :json => { :action => "discussion_added" }
+        else  
+           render :json => { :action => "discussion_not_added" }
+        end
+      else
+        render :json => { :action => "discussion_not_added" }
+      end 
+    end
+  end
+
+  def discussions
+    discussionIds = @plan.descriptions
+    if discussionIds
+      @discussions = [];
+      @discussions = @folder.discussions.find_by_id(discussionIds)
+      unless @discussions.kind_of?(Array)
+        @discussions = [@discussions]
+      end
+    else
+      @discussions = []
+    end
+    if request.headers['X-PJAX']
+      render :layout => false
+    else
+      render :layout => "folder"
     end
   end
 
