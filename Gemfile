@@ -24,6 +24,7 @@ gem 'jbuilder', '~> 2.0'
 
 gem "font-awesome-rails"
 gem 'carrierwave'
+gem "money-rails"
 gem "mini_magick"
 gem "geocoder"
 gem 'whenever', :require => false

@@ -9,7 +9,7 @@ class PlansController < ApplicationController
   def index
     @trip = Trip.find_by_name(params[:trip_id])
     @folder = @trip.folders.find_by_name(params[:folder_id])
-    @itenary = @folders.itenaries.find_by_name(params[:itenary_id])
+    @itenary = @folder.itenaries.find_by_name(params[:itenary_id])
     @plans = @itenary.plans
   end
 
@@ -151,6 +151,6 @@ class PlansController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def plan_params
-      params.require(:plan).permit(:date_time, :name, :itenary_id, :short_description)
+      params.require(:plan).permit(:date_time, :name, :itenary_id, :short_description, :price_cent)
     end
 end
