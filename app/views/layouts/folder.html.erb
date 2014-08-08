@@ -48,6 +48,8 @@
           <li  data-active-sidebar="reminder">
             <a class="sidebar-links" data-folder-path="<%= trip_folder_reminders_path(:trip_id => @trip.name, :folder_id => @folder.name) %>" >Reminders</a>
           </li>
+          <li><a class="sidebar-links" data-folder-path="<%= trip_folder_discussions_path(:trip_id => @trip.name, :folder_id => @folder.name) %>" >Discussions</a>
+          </li>
           <li  data-active-sidebar="timeline">
             <a class="sidebar-links" data-folder-path="<%= activity_trip_folder_path(:trip_id => @trip.name, :id => @folder.name) %>" >Timeline</a>
           </li>

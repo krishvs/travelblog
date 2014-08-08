@@ -2,7 +2,7 @@ class PlansController < ApplicationController
   before_filter :require_user_signed_in, only: [:new, :edit, :create, :update, :destroy]
   layout false
   before_action :set_plan_id, only: [:update]
-  before_action :set_plan_name, only: [ :show, :edit, :destroy]
+  before_action :set_plan_name, only: [ :show, :edit, :destroy, :add_description]
 
   # GET /plans
   # GET /plans.json
@@ -20,6 +20,25 @@ class PlansController < ApplicationController
       render :layout => false
     else
       render :layout => "folder"
+    end
+  end
+
+  def add_description
+    if request.xhr?
+      description = @folder.descriptions.find_by_title(params[:description])
+      if description
+        descriptions = @plan.descriptions ? @plan.descriptions : []
+        descriptions.push(description.id)
+        if @plan.update_attributes({:descriptions => descriptions})  
+          Rails.logger.info ">>>>> Got a plan #{@plan.inspect}"
+          render :json => { :action => "description_added" }
+        else  
+           render :json => { :action => "description_not_added" }
+        end
+      else
+        Rails.logger.info ">>>>> No description #{params[:description]}"
+        render :json => { :action => "descripiton_not_found" }
+      end
     end
   end
 

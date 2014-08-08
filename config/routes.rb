@@ -19,10 +19,13 @@ Rails.application.routes.draw do
         resources :addresses
       end
       resources :costs
+      resources :discussions
       resources :reminders
       resources :photos
       resources :itenaries do
-        resources :plans 
+        resources :plans do
+          get 'add_description', on: :member
+        end
       end
     end
     

@@ -11,5 +11,7 @@ class Folder < ActiveRecord::Base
   has_many :documents
   has_many :itenaries
   
+  has_many :discussions, as: :discussables
+  
   mount_uploader :image, ImageUploader
 end

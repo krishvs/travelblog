@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140807093007) do
+ActiveRecord::Schema.define(version: 20140808065414) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -86,6 +86,15 @@ ActiveRecord::Schema.define(version: 20140807093007) do
 
   add_index "descriptions", ["folder_id"], name: "index_descriptions_on_folder_id", using: :btree
 
+  create_table "discussions", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "discussables_id"
+    t.string   "discussables_type"
+    t.text     "description"
+  end
+
   create_table "documents", force: true do |t|
     t.string   "name"
     t.integer  "mode"
@@ -156,6 +165,7 @@ ActiveRecord::Schema.define(version: 20140807093007) do
     t.text     "short_description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "descriptions"
   end
 
   create_table "reminders", force: true do |t|
