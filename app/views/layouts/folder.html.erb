@@ -99,6 +99,11 @@
         }); 
       });
 
+      $(document).on('click','.normal-links',function(e){
+        e.preventDefault();
+        window.location.href = $(this).attr("data-folder-path");
+      });
+
       $(document).on('click','.sidebar-links', function(){
         $('.sidebar-active').removeClass("sidebar-active");
         $(this).addClass("sidebar-active");

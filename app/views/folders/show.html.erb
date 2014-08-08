@@ -47,16 +47,27 @@
       <div class="col-sm-9" id="pjax-container">
         <div class="row">
           <% @folder.descriptions.each do |description| %>
-            <div class="col-xs-4 ">
-              <div class="panel panel-default folder-display-panel" data-folder-path="<%=trip_folder_description_path(:trip_id => @trip.name,:folder_id => @folder.name, :id => description.title)%>">
+            <div class="col-sm-12 description-list" >
+              <div class="row description-panel">
+                <div class="col-sm-5">
+                  <p class="blog-header"><%= description.title.capitalize %></p>
+                  <p><span class="time"><%= description.updated_at %></span> </p>
+                </div>
+                <div class="col-sm-1 col-sm-offset-3"><i class="fa fa-eye fa-2x cursor-pointer pjax_links" data-folder-path="<%=trip_folder_description_path(:trip_id => @trip.name,:folder_id => @folder.name, :id => description.title)%>"></i> </div>
+                <div class="col-sm-1"><i class="fa fa-pencil-square-o fa-2x cursor-pointer normal-links" data-folder-path="<%= edit_trip_folder_description_path(:trip_id => @trip.name,:folder_id => @folder.name, :id => description.title)%>"></i> </div>
+                <div class="col-sm-1"><%= link_to trip_folder_description_path(:trip_id => @trip.name,:folder_id => @folder.name, :id => description.title), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => '', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
+                       <i class="fa fa-trash-o fa-2x"></i>
+                      <%- end -%></div>
+              </div>
+             <!--  <div class="panel panel-default folder-display-panel" data-folder-path="<%=trip_folder_description_path(:trip_id => @trip.name,:folder_id => @folder.name, :id => description.title)%>">
                 <div class="panel-body folders-display-body">
                   <div class="overlay-div row">
-                    <div class="col-xs-2 col-xs-offset-4 add-margin">
+                    <div class="col-sm-2 col-sm-offset-4 add-margin">
                       <%= link_to trip_folder_description_path(:trip_id => @trip.name,:folder_id => @folder.name, :id => description.title), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => '', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
                        <i class="fa fa-trash-o fa-2x"></i>
                       <%- end -%>
                     </div>
-                     <div class="col-xs-2 add-margin">
+                     <div class="col-sm-2 add-margin">
                       <i class="fa fa-pencil-square-o fa-2x custom-edit-icon" id="" data-folder-edit-path="<%= edit_trip_folder_description_path(:trip_id => @trip.name,:folder_id => @folder.name, :id => description.title)%>"></i> 
                     </div>
                   </div>
@@ -70,19 +81,13 @@
                   </div>
                 </div>
                 <div class="panel-footer"><h5><%= description.title.capitalize %></h5></div>
-              </div>
+              </div> -->
             </div>
           <% end %>
-            <div class="col-sm-4">
-              <div class="panel panel-default ">
-                <div class="panel-body">
-                    New Description
-                    <%= link_to new_trip_folder_description_path(:trip_id => @trip.name, :folder_id => @folder.name), :method => :get, :class => '', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
-                       <i class="fa fa-plus fa-2x"></i>
-                    <%- end -%>
-                </div>
-                <div class="panel-footer">Panel footer</div>
-              </div>
+            <div class="col-sm-12">
+              <a type="button" class="btn btn-default normal-links" data-folder-path="<%=new_trip_folder_description_path(:trip_id => @trip.name, :folder_id => @folder.name)%>">
+                <i class="fa fa-plus"></i> New Blog
+              </a>
             </div>
         </div>
       </div>
@@ -97,11 +102,18 @@
 <script>
   $(function(){
     $(document).on('click','.folder-display-panel, .sidebar-links, .pjax_links', function(){
+      console.log('pjax links click');
       $.pjax({
         url: $(this).attr("data-folder-path"),
         container: '#pjax-container'
       }); 
     });
+
+
+    $(document).on('click','.normal-links',function(e){
+      e.preventDefault();
+      window.location.href = $(this).attr("data-folder-path");
+    })
 
     $('.folder-display-panel').hover(function(){
       $(this).find('.panel-footer').first().addClass('darken');
