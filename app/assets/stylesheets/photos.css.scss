@@ -1,21 +1,14 @@
-.gallery-img{
-	padding-left: 0px !important;
-	padding-right: 0px !important;
-	margin-left: 0px !important;
-	margin-right: 0px !important;
-	.col-xs-4 {
-		padding-left: 0px !important;
-		padding-right: 0px !important;
-		margin-left: 0px !important;
-		margin-right: 0px !important;
-		.col-xs-12 {
-			padding-left: 0px !important;
-			padding-right: 0px !important;
-			margin-left: 0px !important;
-			margin-right: 0px !important;
-			height: 200px;
-			max-width: 100% !important;	
-		}
+.magazine{
+	.photo-div:not(:first-child) {
+    	display:none;
 	}
-	
+	.col-12 {
+		min-height: 200px;
+		max-height: 200px;
+		min-width: 200px;
+		max-width: 200px;	
+	}
+}
+.new-picture{
+	margin-top:100px;
 }
