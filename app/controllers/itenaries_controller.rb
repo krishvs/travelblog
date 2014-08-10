@@ -21,6 +21,8 @@ class ItenariesController < ApplicationController
   def show
     if request.headers['X-PJAX']
       render :layout => false
+    elsif request.xhr?
+      render "plan_index", :layout => false
     else
       render :layout => "folder"
     end
