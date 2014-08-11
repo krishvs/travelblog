@@ -20,6 +20,7 @@ class MapsController < ApplicationController
   # GET /maps/1
   # GET /maps/1.json
   def show
+    @addresses = @map.addresses
     if request.headers['X-PJAX']
       render :layout => false
     else
