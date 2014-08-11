@@ -145,6 +145,15 @@
         })
       });
 
+      $(document).on('click','.modal_links', function(e){
+          e.stopPropagation()
+         url = $(this).attr('data-folder-path');
+         console.log('The value of the uel is ',url);
+        $('#myModal').modal({
+          remote: url
+        })
+      });
+
       $('.time').each(function(){
         $(this).html('updated '+moment($(this).html(), "YYYYMMDD").fromNow());
       });
