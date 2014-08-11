@@ -20,7 +20,11 @@
   <div class="form-group">
     <%= f.label :transport, :class => 'control-label col-md-2' %>
     <div class="col-md-10">
-      <%= f.number_field :transport, :class => 'text-field form-control' %>
+      <select id="transport_select">
+        <option value="1">Walk</option>
+        <option value="2">Car</option>
+      </select>
+      <%= f.number_field :transport, :class => 'text-field form-control map-transport-form-field', :style => "display:none;" %>
     </div>
   </div>
   <div class="form-group">
@@ -29,4 +33,16 @@
     </div>
   </div>
 <% end %>
+
+<script>
+  $(function(){
+    $('#transport_select').select2();
+    $('.map-transport-form-field').val($('#transport_select').select2('data').id)
+    $("#transport_select")
+    .on("change", function(e) { 
+      console.log("change ",$('#transport_select').select2('data').id); 
+      $('.map-transport-form-field').val($('#transport_select').select2('data').id)
+    })
+  });
+</script>
 

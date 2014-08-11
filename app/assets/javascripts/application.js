@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require pjax/pjax
+//= require select2/select2
 //= require gmaps/gmaps
 //= require momentjs/index
 //= require lightbox/lightbox.min.js
