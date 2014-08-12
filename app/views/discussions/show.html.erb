@@ -1,37 +1,45 @@
 <p id="notice"><%= notice %></p>
 <div class="row">
-    <div class="col-sm-12">
-        <p><%=@discussion.name%></p>
+    <div class="col-sm-10">
+        <h4 class="text-center"><%=@discussion.name%></h4>
     </div>
 </div>
 <div class="row" id="discussion-thread">
-    <% @discussion.root_comments.each_with_index do |comment,index| %>
-        <% if index%2 == 0 %>
-            <div class="col-sm-12">
-                <div class="col-sm-3">
-                    <%= image_tag(avatar_url(User.find_by_id(comment.user_id)), :class => "img-circle avatar-image") %>
+    <div class="col-sm-11 col-sm-offset-1">
+        <% @discussion.root_comments.each_with_index do |comment,index| %>
+            <% if index%2 == 0 %>
+                <div class="row ">
+                    <div class="col-sm-8">
+                        <div class="col-sm-1 discussion-img">
+                            <%= image_tag(avatar_url(User.find_by_id(comment.user_id)), :class => "img-circle avatar-image") %>
+                        </div>
+                        <div class="col-sm-10 col-sm-offset-1 comment-body well">
+                            <p><%= comment.body %></p>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-6">
-                    <p><%= comment.body %></p>
+            <% else %>
+                <div class="row ">
+                    <div class="col-sm-8">
+                        <div class="col-sm-10 comment-body well">
+                            <p><%= comment.body %></p>
+                        </div>
+                         <div class="col-sm-1 col-sm-offset-1 discussion-img">
+                            <%= image_tag(avatar_url(User.find_by_id(comment.user_id)), :class => "img-circle avatar-image") %>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        <% else %>
-            <div class="col-sm-12">
-                <div class="col-sm-6">
-                    <p><%= comment.body %></p>
-                </div>
-                 <div class="col-sm-3">
-                    <%= image_tag(avatar_url(User.find_by_id(comment.user_id)), :class => "img-circle avatar-image") %>
-                </div>
-            </div>
+            <% end %>
         <% end %>
-    <% end %>
-    <div class="col-sm-12">
-        <div class="col-sm-6">
-            <div contenteditable="true" id="comment-body" placeholder="Enter comment">comment</div>
-        </div>
-         <div class="col-sm-3">
-            <button class="btn btn-default btn-xs" id="add-comment-to-discussion">Add comment</button>
+        <div class="row ">
+            <div class="col-sm-8">
+                <div class="col-sm-10 comment-body well">
+                    <div contenteditable="true" id="comment-body" placeholder="Enter comment">Add comment</div>
+                </div>
+                 <div class="col-sm-1 col-sm-offset-1 discussion-img">
+                    <button class="btn btn-default btn-xs" id="add-comment-to-discussion">Add comment</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
