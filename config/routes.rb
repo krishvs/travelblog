@@ -19,7 +19,9 @@ Rails.application.routes.draw do
         resources :addresses
       end
       resources :costs
-      resources :discussions
+      resources :discussions do
+        get 'add_comment', on: :member
+      end
       resources :reminders
       resources :photos
       resources :itenaries do

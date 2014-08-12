@@ -4,24 +4,58 @@
         <p><%=@discussion.name%></p>
     </div>
 </div>
-<div class="row">
+<div class="row" id="discussion-thread">
+    <% @discussion.root_comments.each_with_index do |comment,index| %>
+        <% if index%2 == 0 %>
+            <div class="col-sm-12">
+                <div class="col-sm-3">
+                    <%= image_tag(avatar_url(User.find_by_id(comment.user_id)), :class => "img-circle avatar-image") %>
+                </div>
+                <div class="col-sm-6">
+                    <p><%= comment.body %></p>
+                </div>
+            </div>
+        <% else %>
+            <div class="col-sm-12">
+                <div class="col-sm-6">
+                    <p><%= comment.body %></p>
+                </div>
+                 <div class="col-sm-3">
+                    <%= image_tag(avatar_url(User.find_by_id(comment.user_id)), :class => "img-circle avatar-image") %>
+                </div>
+            </div>
+        <% end %>
+    <% end %>
     <div class="col-sm-12">
-        <div class="col-sm-3">
-            <img src="" alt="..." class="img-circle">
-        </div>
         <div class="col-sm-6">
-            <p class>Hello this is a test comment.</p>
-        </div>
-    </div>
-     <div class="col-sm-12">
-        <div class="col-sm-6">
-            <p class>Hello this is a test comment.</p>
+            <div contenteditable="true" id="comment-body" placeholder="Enter comment">comment</div>
         </div>
          <div class="col-sm-3">
-            <img src="" alt="..." class="img-circle">
+            <button class="btn btn-default btn-xs" id="add-comment-to-discussion">Add comment</button>
         </div>
     </div>
 </div>
+<script>
+    $(function(){
+        $('#add-comment-to-discussion').click(function(e){
+            e.preventDefault();
+            var comment = $('#comment-body').html();
+            $('#comment-body').html('');
+            $.ajax({
+                url: "<%= add_comment_trip_folder_discussion_path(:trip_id => @trip.name,:folder_id => @folder.name, :id => @discussion.name) %>",
+                data: {
+                    comment: comment
+                },
+                success: function(){
+                    console.log('The comment has been added');
+                },
+                error: function(){
+                    console.log('Comment adding failed');
+                }
+            });
+        })
+    })
+</script>
 <!-- <div class="detailBox">
     <div class="titleBox">
       <label> Discussion - <%=@discussion.name%> </label>

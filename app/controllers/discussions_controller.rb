@@ -1,7 +1,7 @@
 class DiscussionsController < ApplicationController
 
   before_action :set_discussion_id, only: [:update]
-  before_action :set_discussion_name, only: [ :show, :edit, :destroy]
+  before_action :set_discussion_name, only: [ :show, :edit, :destroy, :add_comment]
 
   # GET /discussions
   # GET /discussions.json
@@ -40,6 +40,13 @@ class DiscussionsController < ApplicationController
 
   # GET /discussions/1/edit
   def edit
+  end
+
+  def add_comment
+    @comment = Comment.build_from(@discussion,current_user.id,params[:comment])
+    if @comment.save
+      render :json => { :action => "comment_added" }
+    end
   end
 
   # POST /discussions
