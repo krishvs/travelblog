@@ -1,16 +1,11 @@
 <%- model_class = Address -%>
 	<div class="row">
-    <div class="col-sm-10">
+    <div class="col-sm-12">
       <div id="map" class="custom-map"></div>
     </div>
-    <div class="col-sm-2">
-      <a href="#" id="start_travel" class="btn small">start</a>
-      <ul id="instructions">
-      </ul>
-    </div>
   </div>
-  <div class="row">
-    <div class=" col-sm-6 address-list-map">
+  <div class="row address-list-map">
+    <div class=" col-sm-6 ">
       <table class="table table-striped">
         <tbody>
           <% @addresses.each_with_index do |address,index| %>
@@ -35,6 +30,16 @@
         </tbody>
       </table>
     </div>
+    <div class="col-sm-4">
+      <a type="button" id="get_route" class="btn btn-default btn-xs" data-collapsable="map-route-container">
+        <i class="fa fa-car"></i> Get Route
+      </a>
+    </div>
+  </div>
+  <div class="row collapse plan-list-border" id="map-route-container">
+    <div class="col-sm-12">
+      <ul id="map-route-list"></ul>
+    </div>
   </div>
 <script>
   $(function(){
@@ -52,25 +57,33 @@
         lat: original_point[0][0],
         lng: original_point[0][1]
       });
-      $('#start_travel').click(function(e){
+      $('#get_route').click(function(e){
         e.preventDefault();
-        map.travelRoute({
-          origin: original_point[0],
-          destination: original_point[1],
-          travelMode: 'driving',
-          step: function(e){
-            $('#instructions').append('<li>'+e.instructions+'</li>');
-            $('#instructions li:eq('+e.step_number+')').delay(450*e.step_number).fadeIn(200, function(){
-              map.setCenter(e.end_location.lat(), e.end_location.lng());
-              map.drawPolyline({
-                path: e.path,
-                strokeColor: '#131540',
-                strokeOpacity: 0.6,
-                strokeWeight: 6
+        var element = $(this);
+        var id = '#'+element.attr('data-collapsable');
+        if($(id).hasClass("in")){
+          $(id).collapse('toggle');
+        }  
+        else{
+          $(id).collapse('toggle');
+          map.travelRoute({
+            origin: original_point[0],
+            destination: original_point[1],
+            travelMode: 'driving',
+            step: function(e){
+              $('#map-route-list').append('<li>'+e.instructions+'</li>');
+              $('#map-route-list li:eq('+e.step_number+')').delay(450*e.step_number).fadeIn(200, function(){
+                map.setCenter(e.end_location.lat(), e.end_location.lng());
+                map.drawPolyline({
+                  path: e.path,
+                  strokeColor: '#131540',
+                  strokeOpacity: 0.6,
+                  strokeWeight: 6
+                });
               });
-            });
-          }
-        });
+            }
+          });
+        }
       });
     $('li').click(function(){
       $('.active').removeClass('active');
