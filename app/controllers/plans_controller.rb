@@ -83,7 +83,7 @@ class PlansController < ApplicationController
   end
 
   def maps
-    mapIds = @plan.descriptions ? @plan.descriptions["maps"] : nil
+    mapIds = @plan.descriptions ? @plan.descriptions[:maps] : nil
     if mapIds
       @maps = [];
       @maps = @folder.maps.find_by_id(mapIds)
