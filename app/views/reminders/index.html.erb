@@ -1,7 +1,23 @@
 <div class="col-sm-9">
   <div class="row">
+    <div class="col-sm-12 reminder-heading">
+      <div class="col-sm-2">
+          <h5>Reminders</h5>
+      </div>
+    </div>
     <% @folder.reminders.each do |reminder| %>
-      <div class="col-xs-4">
+      <div class="col-sm-12 plan-list-border reminder-box" >
+        <div class="col-sm-1">
+          
+        </div>
+        <div class="col-sm-9">
+          <p><%= reminder.name.capitalize %></p>
+        </div>
+        <div class="col-sm-1">
+          <i class="fa-circle fa fa-2x"></i>
+        </div>
+      </div>
+      <!-- <div class="col-xs-4">
         <div class="panel panel-default folder-display-panel" data-folder-path="<%=trip_folder_reminder_path(:trip_id => @trip.name,:folder_id => @folder.name, :id => reminder.name)%>">
           <div class="panel-body folders-display-body">
             <div class="row">
@@ -16,8 +32,10 @@
           <div class="panel-footer"><h5><%= reminder.name.capitalize %></h5></div>
         </div>
       </div>
-    <% end %>
-      <div class="col-sm-4">
+    <% end %> -->
+  </div>
+  <div class="row">
+     <div class="col-sm-4">
         <div class="panel panel-default ">
           <div class="panel-body">
               New Folder
