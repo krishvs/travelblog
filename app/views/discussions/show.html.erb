@@ -6,8 +6,10 @@
 </div>
 <div class="row" id="discussion-thread">
     <div class="col-sm-11 col-sm-offset-1">
+        <% previous_comment = nil %>
+        <% previous_comment_css = "correct" %>
         <% @discussion.root_comments.each_with_index do |comment,index| %>
-            <% if index%2 == 0 %>
+            <% if index == 0 %>
                 <div class="row ">
                     <div class="col-sm-8">
                         <div class="col-sm-1 discussion-img">
@@ -18,18 +20,60 @@
                         </div>
                     </div>
                 </div>
-            <% else %>
-                <div class="row ">
-                    <div class="col-sm-8">
-                        <div class="col-sm-10 comment-body well">
-                            <p><%= comment.body %></p>
+            <% elsif index >= 1 %>
+                <% if previous_comment.user_id == comment.user_id %>
+                    <% if previous_comment_css == "correct" %>
+                        <div class="row ">
+                            <div class="col-sm-8">
+                                <div class="col-sm-1 discussion-img">
+                                    <%= image_tag(avatar_url(User.find_by_id(comment.user_id)), :class => "img-circle avatar-image") %>
+                                </div>
+                                <div class="col-sm-10 col-sm-offset-1 comment-body well">
+                                    <p><%= comment.body %></p>
+                                </div>
+                            </div>
                         </div>
-                         <div class="col-sm-1 col-sm-offset-1 discussion-img">
-                            <%= image_tag(avatar_url(User.find_by_id(comment.user_id)), :class => "img-circle avatar-image") %>
+                    <% elsif previous_comment_css == "mirror" %>
+                        <div class="row ">
+                            <div class="col-sm-8">
+                                <div class="col-sm-10 comment-body well">
+                                    <p><%= comment.body %></p>
+                                </div>
+                                 <div class="col-sm-1 col-sm-offset-1 discussion-img">
+                                    <%= image_tag(avatar_url(User.find_by_id(comment.user_id)), :class => "img-circle avatar-image") %>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    <% end %>
+                <% else %>
+                    <% if previous_comment_css == "correct" %>
+                        <div class="row ">
+                            <div class="col-sm-8">
+                                <div class="col-sm-10 comment-body well">
+                                    <p><%= comment.body %></p>
+                                </div>
+                                 <div class="col-sm-1 col-sm-offset-1 discussion-img">
+                                    <%= image_tag(avatar_url(User.find_by_id(comment.user_id)), :class => "img-circle avatar-image") %>
+                                </div>
+                            </div>
+                        </div>
+                        <% previous_comment_css = "mirror" %>
+                    <% elsif previous_comment_css == "mirror" %>
+                        <div class="row ">
+                            <div class="col-sm-8">
+                                <div class="col-sm-1 discussion-img">
+                                    <%= image_tag(avatar_url(User.find_by_id(comment.user_id)), :class => "img-circle avatar-image") %>
+                                </div>
+                                <div class="col-sm-10 col-sm-offset-1 comment-body well">
+                                    <p><%= comment.body %></p>
+                                </div>
+                            </div>
+                        </div>
+                        <% previous_comment_css = "correct" %>
+                    <% end %>
+                <% end %>
             <% end %>
+            <% previous_comment = comment %>
         <% end %>
         <div class="row ">
             <div class="col-sm-8">
