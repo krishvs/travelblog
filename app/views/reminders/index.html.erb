@@ -6,18 +6,21 @@
       </div>
     </div>
     <% @folder.reminders.each do |reminder| %>
-      <div class="col-sm-12 plan-list-border cursor-pointer pjax_links reminder-box" data-folder-path="<%=trip_folder_reminder_path(:trip_id => @trip.name,:folder_id => @folder.name, :id => reminder.name)%>" >
-        <div class="col-sm-1">
-          <i class="fa-calendar fa "></i>
+      <% if reminder.sent == 0 %>
+        <div class="col-sm-12 plan-list-border cursor-pointer pjax_links reminder-box" data-folder-path="<%=trip_folder_reminder_path(:trip_id => @trip.name,:folder_id => @folder.name, :id => reminder.name)%>" >
+          <div class="col-sm-1">
+            <i class="fa-calendar fa "></i>
+          </div>
+          <div class="col-sm-9">
+            <p><%= reminder.name.capitalize %></p>
+            <p><%= reminder.description %></p>
+          </div>
+          <div class="col-sm-1">
+            <i class="fa-circle fa fa-2x"></i>
+          </div>
         </div>
-        <div class="col-sm-9">
-          <p><%= reminder.name.capitalize %></p>
-        </div>
-        <div class="col-sm-1">
-          <i class="fa-circle fa fa-2x"></i>
-        </div>
-      </div>
-     <% end %> 
+      <% end %>
+    <% end %> 
   </div>
   <div class="row reminder-new-div">
     <div class="col-sm-12">
@@ -27,3 +30,12 @@
     </div>
   </div>
 </div>
+<script>
+  $(function(){
+    $('.reminder-box').hover(function(){
+      $(this).addClass('reminder-well');
+    },function(){
+      $(this).removeClass("reminder-well");
+    })
+  })
+</script>
