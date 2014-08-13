@@ -2,7 +2,7 @@ class PlansController < ApplicationController
   before_filter :require_user_signed_in, only: [:new, :edit, :create, :update, :destroy]
   layout false
   before_action :set_plan_id, only: [:update]
-  before_action :set_plan_name, only: [ :show, :edit, :destroy, :add_description, :add_discussion, :discussions]
+  before_action :set_plan_name, only: [ :show, :edit, :destroy, :add_description, :add_discussion, :discussions, :add_map, :maps]
 
   # GET /plans
   # GET /plans.json
@@ -48,8 +48,8 @@ class PlansController < ApplicationController
     if request.xhr?
       discussion = @folder.discussions.create({:name => params[:name]})
       if discussion.save
-        descriptions = @plan.descriptions ? @plan.descriptions : []
-        descriptions.push(discussion.id)
+        descriptions = @plan.descriptions ? @plan.descriptions : {:discussions => [], :maps => [] }
+        descriptions["discussions"].push(discussion.id)
         if @plan.update_attributes({:descriptions => descriptions})  
           Rails.logger.info ">>>>> Got a plan #{@plan.inspect}"
           render :json => { :action => "discussion_added" }
@@ -62,8 +62,46 @@ class PlansController < ApplicationController
     end
   end
 
+  def add_map
+    if request.xhr?
+      map = @folder.maps.create({:name => params[:name], :description => params[:description], :transport => params[:transport]})
+      if map.save
+        descriptions = @plan.descriptions ? @plan.descriptions : {:discussions => [], :maps => [] }
+        Rails.logger.debug ">>> Value of descriptions is #{descriptions.inspect}  #{descriptions[:maps]} #{map.id}"
+        descriptions[:maps] << map.id
+        Rails.logger.info ">>> The value of "
+        if @plan.update_attributes({:descriptions => descriptions})  
+          Rails.logger.info ">>>>> Got a plan #{@plan.inspect}"
+          render :json => { :action => "map_added" }
+        else  
+           render :json => { :action => "map_not_added" }
+        end
+      else
+        render :json => { :action => "map_not_added" }
+      end 
+    end
+  end
+
+  def maps
+    mapIds = @plan.descriptions ? @plan.descriptions["maps"] : nil
+    if mapIds
+      @maps = [];
+      @maps = @folder.maps.find_by_id(mapIds)
+      unless @maps.kind_of?(Array)
+        @maps = [@maps]
+      end
+    else
+      @maps = []
+    end
+    if request.headers['X-PJAX']
+      render :layout => false
+    else
+      render :layout => "folder"
+    end
+  end
+
   def discussions
-    discussionIds = @plan.descriptions
+    discussionIds = @plan.descriptions ? @plan.descriptions["discussions"] : nil
     if discussionIds
       @discussions = [];
       @discussions = @folder.discussions.find_by_id(discussionIds)

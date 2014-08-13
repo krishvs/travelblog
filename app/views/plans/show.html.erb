@@ -15,11 +15,22 @@
 		</div>
 		<div class="col-xs-12">
 		  <input type="text" placeholder="name of discussion" name="discussions" id="discussion_name">
-		  <button id="add_discussion" class="btn btn-primary">Start Discussion</button>
+		  <button id="add_discussion" class="btn btn-primary">Add Discussion</button>
+		</div>
+		<div class="col-xs-12">
+		  <input type="text" placeholder="name of map" name="map" id="map_name">
+		  <input type="text" placeholder="description of map" name="map" id="map_description">
+		  <input type="number" placeholder="transport of map" name="map" id="map_transport">
+		  <button id="add_map" class="btn btn-primary">Add Map</button>
 		</div>
 		<div class="col-xs-12">
 			<a type="button" class="btn btn-default pjax_links close_modal btn-xs" data-folder-path="<%=discussions_trip_folder_itenary_plan_path(:trip_id => @trip.name, :folder_id => @folder.name, :itenary_id =>@itenary.name, :id => @plan.name)%>">
 			<i class="fa fa-2x "></i> Discussions
+			</a>
+		</div>
+		<div class="col-xs-12">
+			<a type="button" class="btn btn-default pjax_links close_modal btn-xs" data-folder-path="<%=maps_trip_folder_itenary_plan_path(:trip_id => @trip.name, :folder_id => @folder.name, :itenary_id =>@itenary.name, :id => @plan.name)%>">
+			<i class="fa fa-2x "></i> Maps
 			</a>
 		</div>
 	</div>
@@ -27,13 +38,31 @@
 
 
 <script>
-  var url = "<%= add_discussion_trip_folder_itenary_plan_path(:trip_id => @trip.name, :folder_id => @folder.name, :itenary_id =>@itenary.name, :id => @plan.name) %>"
+  var discussion_url = "<%= add_discussion_trip_folder_itenary_plan_path(:trip_id => @trip.name, :folder_id => @folder.name, :itenary_id =>@itenary.name, :id => @plan.name) %>"
+  var map_url = "<%= add_map_trip_folder_itenary_plan_path(:trip_id => @trip.name, :folder_id => @folder.name, :itenary_id =>@itenary.name, :id => @plan.name) %>"
   $(function(){
     $('#add_discussion').click(function(){
       $.ajax({
-        url:url,
+        url:discussion_url,
         data: {
           name: $('#discussion_name').val()
+        },
+        contentType: 'application/json; charset=utf-8',
+        success: function(){
+          console.log('There was success in adding user');
+        },
+        error: function(err){
+          console.log('Tehre was an error in adding the user ',err);
+        }
+      })
+    });
+    $('#add_map').click(function(){
+      $.ajax({
+        url:map_url,
+        data: {
+          name: $('#map_name').val(),
+          description: $('#map_description').val(),
+          transport: $('#map_transport').val()
         },
         contentType: 'application/json; charset=utf-8',
         success: function(){

@@ -4,6 +4,6 @@ class Plan < ActiveRecord::Base
 	    :greater_than_or_equal_to => 0
 	  }
 	belongs_to :itenary
-	serialize :descriptions, Array
+	serialize :descriptions
 	has_many :maps, as: :sub_maps
 end

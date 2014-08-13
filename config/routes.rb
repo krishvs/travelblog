@@ -29,6 +29,8 @@ Rails.application.routes.draw do
           get 'add_description', on: :member
           get 'add_discussion', on: :member
           get 'discussions', on: :member
+          get 'add_map', on: :member
+          get 'maps', on: :member
         end
       end
     end
