@@ -19,7 +19,9 @@ class RemindersController < ApplicationController
   # GET /reminders/1
   # GET /reminders/1.json
   def show
-    if request.headers['X-PJAX']
+    if request.headers['X-PJAX'] 
+      render :layout => false
+    elsif  request.xhr?
       render :layout => false
     else
       render :layout => "folder"
@@ -31,7 +33,7 @@ class RemindersController < ApplicationController
     @trip = Trip.find_by_name(params[:trip_id])
     @folder = @trip.folders.find_by_name(params[:folder_id])
     @reminder = Reminder.new
-    if request.headers['X-PJAX']
+    if request.headers['X-PJAX'] || request.xhr?
       render :layout => false
     else
       render :layout => "folder"
