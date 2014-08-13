@@ -1,15 +1,12 @@
-<div class="col-xs-9">
+<div class="modal-header">
+  <h5><%= @plan.name %></h5>
+</div>
+<div class="modal-body">
 	<div class="row">
 		<div class="col-xs-12">
-			<p id="notice"><%= notice %></p>
 			<p>
 			  <strong>Date time:</strong>
 			  <%= @plan.date_time %>
-			</p>
-
-			<p>
-			  <strong>Name:</strong>
-			  <%= @plan.name %>
 			</p>
 			<p>
 			  <strong>Short description:</strong>
@@ -21,7 +18,9 @@
 		  <button id="add_discussion" class="btn btn-primary">Start Discussion</button>
 		</div>
 		<div class="col-xs-12">
-			<i class="fa fa-plus fa-2x pjax_links" data-folder-path="<%=discussions_trip_folder_itenary_plan_path(:trip_id => @trip.name, :folder_id => @folder.name, :itenary_id =>@itenary.name, :id => @plan.name)%>" ></i>
+			<a type="button" class="btn btn-default pjax_links close_modal btn-xs" data-folder-path="<%=discussions_trip_folder_itenary_plan_path(:trip_id => @trip.name, :folder_id => @folder.name, :itenary_id =>@itenary.name, :id => @plan.name)%>">
+			<i class="fa fa-2x "></i> Discussions
+			</a>
 		</div>
 	</div>
 </div>

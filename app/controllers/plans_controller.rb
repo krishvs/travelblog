@@ -18,6 +18,8 @@ class PlansController < ApplicationController
   def show
     if request.headers['X-PJAX']
       render :layout => false
+    elsif request.xhr?
+      render :layout => false
     else
       render :layout => "folder"
     end

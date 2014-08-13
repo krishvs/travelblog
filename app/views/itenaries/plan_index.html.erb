@@ -1,5 +1,5 @@
 <% @itenary.plans.each do |plan| %>
-	<div class="col-sm-12">
+	<div class="col-sm-12 modal_links cursor-pointer" data-folder-path="<%=trip_folder_itenary_plan_path(:trip_id => @trip.name, :folder_id => @folder.name, :itenary_id => @itenary.name, :id => plan.name)%>">
 		<div>
 			<div class=" col-sm-1 plan-height plan-timing"><p><%= plan.name %></p></div>
 			<div class="col-sm-10 plan-height plan-description"><%= plan.short_description[0..50]%></div>

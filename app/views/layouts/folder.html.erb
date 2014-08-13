@@ -145,6 +145,10 @@
         })
       });
 
+      $(document).on('click','.close_modal', function(e){
+        $('#myModal').modal('hide')
+      });
+
       $(document).on('click','.modal_links', function(e){
           e.stopPropagation()
          url = $(this).attr('data-folder-path');
