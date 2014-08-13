@@ -19,6 +19,11 @@ class RemindersController < ApplicationController
   # GET /reminders/1
   # GET /reminders/1.json
   def show
+    if request.headers['X-PJAX']
+      render :layout => false
+    else
+      render :layout => "folder"
+    end
   end
 
   # GET /reminders/new
@@ -26,6 +31,11 @@ class RemindersController < ApplicationController
     @trip = Trip.find_by_name(params[:trip_id])
     @folder = @trip.folders.find_by_name(params[:folder_id])
     @reminder = Reminder.new
+    if request.headers['X-PJAX']
+      render :layout => false
+    else
+      render :layout => "folder"
+    end
   end
 
   # GET /reminders/1/edit
@@ -85,7 +95,7 @@ class RemindersController < ApplicationController
      def set_reminder_name
       @trip = Trip.find_by_name(params[:trip_id])
       @folder = @trip.folders.find_by_name(params[:folder_id]) 
-      @reminder = @folder.reminders.find_by_title(params[:id])
+      @reminder = @folder.reminders.find_by_name(params[:id])
       @model_link = "reminder" 
     end
 
