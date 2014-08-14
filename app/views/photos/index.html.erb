@@ -1,13 +1,13 @@
 <%- model_class = Photo -%>
 <div class="col-sm-12 ">
   	<% @photos.each do |album,album_photos| %>
-    	<%= render "album" ,  :album_photos => album_photos , :album => album %>
+    	<%= render "album" ,  :photo => album_photos[0] , :album => album %>
   	<% end %>
-  	<div class="col-sm-2 new-picture">
-		<a type="button" class="btn btn-default pjax_links" data-folder-path="<%=new_trip_folder_photo_path(:trip_id => @trip.name, :folder_id => @folder.name)%>">
-	      <i class="fa fa-plus"></i> New Picture
-	    </a>
-	</div>
+</div>
+<div class="col-sm-2 new-picture">
+	<a type="button" class="btn btn-default pjax_links" data-folder-path="<%=new_trip_folder_photo_path(:trip_id => @trip.name, :folder_id => @folder.name)%>">
+      <i class="fa fa-plus"></i> New Picture
+    </a>
 </div>
 <script>
 	$(function(){

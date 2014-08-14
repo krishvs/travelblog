@@ -12,6 +12,8 @@ class BlogsController < ApplicationController
   # GET /blogs/1.json
   def show
     @blog = find_description
+    @template = Liquid::Template.parse(@user.template.template)  # Parses and compiles the template
+    @final_template = @template.render( 'title' => @blog.title, 'username' => @user.username, 'description' => @blog.description, 'created_at' => @blog.created_at )  
     if @blog
       render :layout => "blog_article"
     else
@@ -46,7 +48,9 @@ class BlogsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_blog
+      Rails.logger.info "I am in the set_blog"
       @user = User.find_by_domain(request.host)
+      Rails.logger.info "The value of the user is #{@user.inspect}"
       unless @user
         redirect_to root_path
       end

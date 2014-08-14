@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :trips
   has_many :descriptions
   has_many :itenaries
+  has_one :template
   
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup

@@ -3,35 +3,14 @@
     <div><span class="text">Page 2</span></div>
     <div><span class="text">Page 3</span></div>
 </div> -->
-  <div class="magazine col-sm-4">
-  <% album_photos.each do |photo| %>
-
-    <div class="photo-div col-sm-12">
-      <div class="row">
-        <h5>Album - <%= album ? album : "Default" %></h5>
-      </div>
-      <div class="row">
-        <a href="<%= photo.image_url() if photo.image? %>" data-lightbox="<%=album ? album : "default" %>"  >
-          <img src="<%= photo.image_url(:display) if photo.image? %>" class="col-12" />
-        </a>
-      </div>
-    </div>
-  <% end %>
-  <div class="col-sm-4">
-    <a type="button" class="btn btn-default btn-xs album-view" data-album="<%=album ? album : "" %>" >
-      <i class="fa fa-car"></i> View Album
-    </a>
-  </div>
-   
-   <!--  <div class="col-xs-4">
-      <div class="panel panel-default ">
-        <div class="panel-body">
-            New Description
-            <%= link_to new_trip_folder_photo_path(:trip_id => @trip.name, :folder_id => @folder.name), :method => :get, :class => '', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
-               <i class="fa fa-plus fa-2x"></i>
-            <%- end -%>
+  <% if album %>
+      <div class="photo-div col-sm-4 album-view cursor-pointer" data-album="<%=album%>">
+        <div class="row">
+          <h5>Album - <%= album %></h5>
         </div>
-        <div class="panel-footer">Panel footer</div>
+        <div class="row">
+            <img src="<%= photo.image_url(:display) if photo.image? %>" class="col-12" />
+        </div>
       </div>
-    </div> -->
-  </div>
+  <% end %>
+ 

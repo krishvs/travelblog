@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140808101035) do
+ActiveRecord::Schema.define(version: 20140814133547) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -213,6 +213,13 @@ ActiveRecord::Schema.define(version: 20140808101035) do
   end
 
   add_index "routes_routes", ["route_id"], name: "index_routes_routes_on_route_id", using: :btree
+
+  create_table "templates", force: true do |t|
+    t.text     "template"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+  end
 
   create_table "trips", force: true do |t|
     t.string   "name"
