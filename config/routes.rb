@@ -23,7 +23,9 @@ Rails.application.routes.draw do
         get 'add_comment', on: :member
       end
       resources :reminders
-      resources :photos
+      resources :photos do
+        get 'album_photos', on: :collection
+      end
       resources :itenaries do
         resources :plans do
           get 'add_description', on: :member

@@ -1,0 +1,13 @@
+<div class="modal-header">
+	<h5><%=@album%></5>
+</div>
+<div class="modal-body">
+	 <div class="row">
+	  <% @photos.each do |photo| %>
+	    <div class="col-sm-4">
+	        <a href="<%= photo.image_url() if photo.image? %>" data-lightbox="<%=@album%>_photos"  >
+	          <img src="<%= photo.image_url(:display) if photo.image? %>" class="col-12" />
+	        </a>
+	    </div>
+	  <% end %>
+</div>

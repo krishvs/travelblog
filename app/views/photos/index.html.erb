@@ -9,4 +9,16 @@
 	    </a>
 	</div>
 </div>
+<script>
+	$(function(){
+		$(document).on('click','.album-view',function(){
+			var url = "<%=album_photos_trip_folder_photos_path(:trip_id => @trip.name, :folder_id => @folder.name)%>"
+			url = url+"?album="+$(this).attr("data-album");
+	         console.log('The value of the uel is ',url);
+	        $('#myModal').modal({
+	          remote: url
+	        });
+		});
+	});
+</script>
 

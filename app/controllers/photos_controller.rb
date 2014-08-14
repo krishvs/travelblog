@@ -1,6 +1,6 @@
 class PhotosController < ApplicationController
   before_action :set_photo_id, only: [:update]
-  before_action :set_photo_name, only: [ :show, :edit, :destroy]
+  before_action :set_photo_name, only: [ :show, :edit, :destroy, :album_photos]
 
   # GET /photos
   # GET /photos.json
@@ -25,6 +25,16 @@ class PhotosController < ApplicationController
     @trip = Trip.find_by_name(params[:trip_id])
     @folder = @trip.folders.find_by_name(params[:folder_id])
     @photo = Photo.new
+  end
+
+  def album_photos
+    @album = params[:album]
+    @photos = Photo.where("album = ? and folder_id = ?", params[:album], @folder.id)
+    if request.headers['X-PJAX'] || request.xhr?
+      render :layout => false
+    else
+      render :layout => "folder"
+    end
   end
 
   # GET /photos/1/edit

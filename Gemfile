@@ -25,6 +25,7 @@ gem 'jbuilder', '~> 2.0'
 
 gem "font-awesome-rails"
 gem 'carrierwave'
+gem 'debugger'
 gem "money-rails"
 gem "mini_magick"
 gem "geocoder"
@@ -36,6 +37,8 @@ gem 'cancancan', '~> 1.9'
 gem 'liquid'
 gem 'ckeditor'
 gem 'acts_as_commentable_with_threading'
+gem 'rails_12factor', group: :production
+gem 'pg', group: :production
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
@@ -71,3 +74,5 @@ group :development do
   gem 'better_errors'
   gem 'pry-rails'
 end
+
+ruby "2.1.1"
