@@ -14,7 +14,10 @@ Rails.application.routes.draw do
     resources :folders, :path => 'f' do
       get 'activity', on: :member
       get 'timeline', on: :member
-      resources :descriptions, :path => "blogs"
+      resources :descriptions, :path => "blogs" do
+        get "template", on: :collection
+        post "update_template", on: :collection
+      end
       resources :maps do
         resources :addresses
       end

@@ -39,9 +39,16 @@
     </div>
   <% end %>
     <div class="col-sm-12">
-      <a type="button" class="btn btn-default normal-links" data-folder-path="<%=new_trip_folder_description_path(:trip_id => @trip.name, :folder_id => @folder.name)%>">
-        <i class="fa fa-plus"></i> New Blog
-      </a>
+      <div class="col-sm-2">
+        <a type="button" class="btn btn-default normal-links" data-folder-path="<%=new_trip_folder_description_path(:trip_id => @trip.name, :folder_id => @folder.name)%>">
+          <i class="fa fa-plus"></i> New Blog
+        </a>
+      </div>
+       <div class="col-sm-2">
+        <a type="button" class="btn btn-default pjax_links" data-folder-path="<%=template_trip_folder_descriptions_path(:trip_id => @trip.name, :folder_id => @folder.name)%>">
+          <i class="fa fa-plus"></i> Change Blog Template
+        </a>
+      </div>
     </div>
 </div>
 

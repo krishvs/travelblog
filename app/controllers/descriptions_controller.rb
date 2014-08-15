@@ -2,7 +2,7 @@ class DescriptionsController < ApplicationController
   before_action :set_description_id, only: [:update]
   layout "description", only: [:new, :edit]
   layout "blog", only: [:show]
-  before_action :set_description_name, only: [ :show, :edit, :destroy]
+  before_action :set_description_name, only: [ :show, :edit, :destroy, :template]
 
   # GET /descriptions
   # GET /descriptions.json
@@ -20,7 +20,32 @@ class DescriptionsController < ApplicationController
   # GET /descriptions/1
   # GET /descriptions/1.json
   def show
+    if request.headers['X-PJAX']
+      render :layout => false
+    else
+      render :layout => "folder"
+    end
+  end
 
+  def template
+    @template = current_user.template.template 
+     if request.headers['X-PJAX']
+      render :layout => false
+    else
+      render :layout => "folder"
+    end
+  end
+
+  def update_template
+    @trip = Trip.find_by_name(params[:trip_id])
+    @folder = @trip.folders.find_by_name(params[:folder_id])
+    current_user.template.template = params[:template]
+    if current_user.template.save
+        redirect_to trip_folder_descriptions_path
+      else
+        format.html { render :new }
+        format.json { render json: @description.errors, status: :unprocessable_entity }
+      end
   end
 
   # GET /descriptions/new

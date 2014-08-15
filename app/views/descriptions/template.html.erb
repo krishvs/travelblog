@@ -1,0 +1,30 @@
+<%= form_tag(update_template_trip_folder_descriptions_path(:trip_id => @trip.name, :folder_id => @folder.name), id: "template_update_form") do %>
+	<div class="col-sm-12">
+	<%= text_area_tag("codemirror_template",@template, size: '50x10', name: "template") %>
+	</div>
+	<div class="col-sm-2">
+	    <%= submit_tag "Save Template", class:"btn btn-default", tabindex: "2" %>
+	</div>
+<% end %>
+
+ <script>
+ $(function(){
+ 	 var mixedMode = {
+        name: "htmlmixed",
+        scriptTypes: [{matches: /\/x-handlebars-template|\/x-mustache/i,
+                       mode: null},
+                      {matches: /(text|application)\/(x-)?vb(a|script)/i,
+                       mode: "vbscript"}]
+      };
+      var editor = CodeMirror.fromTextArea(document.getElementById("codemirror_template"), {
+      	mode: mixedMode,
+      	lineNumbers: true,
+      	theme: "monokai"
+      });
+      $('#template_update_form').submit(function(){
+      	event.preventDefault();
+      	$('#codemirror_template').val(editor.getValue());
+      	$("#template_update_form").unbind('submit').submit();
+      })
+ })
+ </script>

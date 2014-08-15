@@ -15,6 +15,15 @@
   <%= javascript_include_tag 'graphs/src/models/multiBarChart', 'data-turbolinks-track' => true %>
   <%= stylesheet_link_tag    'timelineJS/timeline', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'timelineJS/embed', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'codemirror/codemirror', media: 'all', 'data-turbolinks-track' => true %>
+<%= stylesheet_link_tag    'codemirror/theme/monokai', media: 'all', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'codemirror/codemirror', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'codemirror/addon/edit/matchbrackets', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'codemirror/mode/xml/xml', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'codemirror/mode/css/css', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'codemirror/mode/javascript/javascript', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'codemirror/mode/vbscript/vbscript', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'codemirror/mode/htmlmixed/htmlmixed', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 <meta name="viewport" content="width=device-width, initial-scale=1"/></head>
 <body>
