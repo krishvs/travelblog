@@ -1,94 +1,68 @@
 <%- model_class = Address -%>
+<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.3/Leaflet.fullscreen.min.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.3/leaflet.fullscreen.css' rel='stylesheet' />
 	<div class="row">
     <div class="col-sm-12">
-      <div id="map" class="custom-map"></div>
+      <div id="map" class="custom-map dark"></div>
     </div>
   </div>
   <div class="row address-list-map">
-    <div class=" col-sm-6 ">
+    <div class=" col-sm-12 ">
       <table class="table table-striped">
         <tbody>
           <% @addresses.each_with_index do |address,index| %>
             <tr>
-              <% if index == 0 %>
-                  <td>From :</td>
-              <% else %>
-                  <td>To :</td>
-              <% end %>
+              <td>Address :</td>
               <td data-folder-path="<%=trip_folder_description_path(:trip_id => @trip.name,:folder_id => @folder.name, :map_id => @map.name, :id => address.address)%>"><%= address.address %></td>
             </tr>
           <% end %>
-          <% if @map.addresses.length != 2 %>
-            <tr>
-              <td>
-                <a type="button" class="btn btn-default modal_link btn-xs" data-folder-path="<%=new_trip_folder_map_address_path(:trip_id => @trip.name, :folder_id => @folder.name, :map_id => @map.name)%>">
-                <i class="fa fa-plus"></i> Add Address
-                </a>
-              </td>
-            </tr>
-          <% end %>
+          <tr>
+            <td>
+              <a type="button" class="btn btn-default modal_link btn-xs" data-folder-path="<%=new_trip_folder_map_address_path(:trip_id => @trip.name, :folder_id => @folder.name, :map_id => @map.name)%>">
+              <i class="fa fa-plus"></i> Add Address
+              </a>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
-    <div class="col-sm-4">
-      <a type="button" id="get_route" class="btn btn-default btn-xs" data-collapsable="map-route-container">
-        <i class="fa fa-car"></i> Get Route
-      </a>
-    </div>
   </div>
-  <div class="row collapse plan-list-border" id="map-route-container">
-    <div class="col-sm-12">
-      <ul id="map-route-list"></ul>
-    </div>
-  </div>
-<script>
+ <script>
   $(function(){
-    var original_point =[];
-    original_point[0] = [-12.044012922866312, -77.02470665341184]
-    original_point[1] = [-12.044012922866312, -77.02470665341184]
+    var original_points =[];
+    var markers = [];
+    var latlngs = [];
+    original_points[0] = [-12.044012922866312, -77.02470665341184]
+    original_points[1] = [-12.044012922866312, -77.02470665341184]
 
-    <% if @map.addresses.first %>
-    	original_point[0] = [<%= @map.addresses.first.latitude %>,<%= @map.addresses.first.longitude %>]
-    	original_point[1] = [<%= @map.addresses.last.latitude %>,<%= @map.addresses.last.longitude %>]
+    <% @map.addresses.each_with_index do |address,index| %>
+    	original_points[<%=index%>] = [<%= address.latitude %>,<%= address.longitude %>]
    	<% end %>
+    var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+    var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 12, attribution: osmAttrib}); 
 
-    map = new GMaps({
-        div: '#map',
-        lat: original_point[0][0],
-        lng: original_point[0][1]
-      });
-      $('#get_route').click(function(e){
-        e.preventDefault();
-        var element = $(this);
-        var id = '#'+element.attr('data-collapsable');
-        if($(id).hasClass("in")){
-          $(id).collapse('toggle');
-        }  
-        else{
-          $(id).collapse('toggle');
-          map.travelRoute({
-            origin: original_point[0],
-            destination: original_point[1],
-            travelMode: 'driving',
-            step: function(e){
-              $('#map-route-list').append('<li>'+e.instructions+'</li>');
-              $('#map-route-list li:eq('+e.step_number+')').delay(450*e.step_number).fadeIn(200, function(){
-                map.setCenter(e.end_location.lat(), e.end_location.lng());
-                map.drawPolyline({
-                  path: e.path,
-                  strokeColor: '#131540',
-                  strokeOpacity: 0.6,
-                  strokeWeight: 6
-                });
-              });
-            }
-          });
-        }
-      });
-    $('li').click(function(){
-      $('.active').removeClass('active');
-      $(this).addClass('active');
-    }); 
+    var map = L.map('map').setView([original_points[0][0], original_points[0][1]], 10);
+    L.control.fullscreen().addTo(map);
+    map.addLayer(osm);
+
+    function setMapMarker(data) {
+        var fixedMarker = L.marker([data[0], data[1]]).addTo(map);
+        fixedMarker.bindPopup(data[2]);
+        markers.push(fixedMarker);
+        latlngs.push(new L.LatLng(data[0], data[1]));
+        
+    }
+    <% @map.addresses.each do |address| %>
+      setMapMarker([<%= address.latitude %>,<%= address.longitude %>,"<%= address.address %>"])
+    <% end %>
+
+    var polyline = L.polyline(latlngs).addTo(map);
   });
+
+ </script>
+
+
+ <script>
 
 </script>
