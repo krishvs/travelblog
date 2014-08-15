@@ -3,6 +3,7 @@ class MapsController < ApplicationController
 
   before_action :set_map_id, only: [:update]
   before_action :set_map_name, only: [ :show, :edit, :destroy]
+  before_action :set_domain, only: [:public_show]
 
   # GET /maps
   # GET /maps.json
@@ -26,6 +27,11 @@ class MapsController < ApplicationController
     else
       render :layout => "folder"
     end
+  end
+
+  def public_show
+    @addresses = @map.addresses      
+    render :layout => "iframe"
   end
 
   # GET /maps/new
@@ -55,8 +61,8 @@ class MapsController < ApplicationController
     end
     respond_to do |format|
       if @map.save
-        format.html { redirect_to @map, notice: 'Map was successfully created.' }
-        format.json { render :show, status: :created, location: @map }
+        format.html { redirect_to trip_folder_map_path(:trip_id => @trip.name,:folder_id => @folder.name,:id => @map.name ), notice: 'Map was successfully created.' }
+        format.json { render :show, status: :created, location: trip_folder_map_path(:trip_id => @trip.name,:folder_id => @folder.name,:id => @map.name ) }
       else
         format.html { render :new }
         format.json { render json: @map.errors, status: :unprocessable_entity }
@@ -72,8 +78,8 @@ class MapsController < ApplicationController
     end
     respond_to do |format|
       if @map.update(map_params)
-        format.html { redirect_to @map, notice: 'Map was successfully updated.' }
-        format.json { render :show, status: :ok, location: @map }
+        format.html { redirect_to trip_folder_map_path(:trip_id => @trip.name,:folder_id => @folder.name,:id => @map.name ), notice: 'Map was successfully updated.' }
+        format.json { render :show, status: :ok, location: trip_folder_map_path(:trip_id => @trip.name,:folder_id => @folder.name,:id => @map.name ) }
       else
         format.html { render :edit }
         format.json { render json: @map.errors, status: :unprocessable_entity }
@@ -86,13 +92,24 @@ class MapsController < ApplicationController
   def destroy
     @map.destroy
     respond_to do |format|
-      format.html { redirect_to maps_url, notice: 'Map was successfully destroyed.' }
+      format.html { redirect_to trip_folder_maps_path(:trip_id => @trip.name,:folder_id => @folder.name ), notice: 'Map was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
+
+    def set_domain
+      response.headers.except! 'X-Frame-Options'
+      Rails.logger.info "I am in the set_blog"
+      @user = User.find_by_domain(request.host)
+      @map = Map.find_by_url(params[:name])
+      Rails.logger.info "The value of the user is #{@user.inspect}"
+      unless @user
+        redirect_to root_path
+      end
+    end
     
     def set_map_name
       @trip = Trip.find_by_name(params[:trip_id])

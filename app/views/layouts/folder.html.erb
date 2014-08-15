@@ -15,15 +15,11 @@
   <%= javascript_include_tag 'graphs/src/models/multiBarChart', 'data-turbolinks-track' => true %>
   <%= stylesheet_link_tag    'timelineJS/timeline', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'timelineJS/embed', 'data-turbolinks-track' => true %>
-  <%= stylesheet_link_tag    'codemirror/codemirror', media: 'all', 'data-turbolinks-track' => true %>
-<%= stylesheet_link_tag    'codemirror/theme/monokai', media: 'all', 'data-turbolinks-track' => true %>
-<%= javascript_include_tag 'codemirror/codemirror', 'data-turbolinks-track' => true %>
-<%= javascript_include_tag 'codemirror/addon/edit/matchbrackets', 'data-turbolinks-track' => true %>
-<%= javascript_include_tag 'codemirror/mode/xml/xml', 'data-turbolinks-track' => true %>
-<%= javascript_include_tag 'codemirror/mode/css/css', 'data-turbolinks-track' => true %>
-<%= javascript_include_tag 'codemirror/mode/javascript/javascript', 'data-turbolinks-track' => true %>
-<%= javascript_include_tag 'codemirror/mode/vbscript/vbscript', 'data-turbolinks-track' => true %>
-<%= javascript_include_tag 'codemirror/mode/htmlmixed/htmlmixed', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'codemirror/codemirror', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'controllers/index', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'controllers/scaffolds', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'controllers/timeline', 'data-turbolinks-track' => true %>
+
 
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
@@ -34,7 +30,6 @@
 <%= bootstrap_flash %>
 
 <div class="container" >
-  <div class="col-sm-10 col-sm-offset-1">
     <div class="row ">
       <div class="page-header col-xs-9">
         <span class="main-heading"><%=t '.title', :default => Trip %>/<%= @trip.name %>/<%= @folder.name %></span>
@@ -95,7 +90,6 @@
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
     </div>   
-  </div>
   <script>
     $(function(){
       $('.custom-sidebar').children().each(function(){

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140814133547) do
+ActiveRecord::Schema.define(version: 20140815102030) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -161,6 +161,7 @@ ActiveRecord::Schema.define(version: 20140814133547) do
     t.datetime "updated_at"
     t.integer  "sub_maps_id"
     t.string   "sub_maps_type"
+    t.text     "url"
   end
 
   create_table "photos", force: true do |t|
@@ -229,6 +230,7 @@ ActiveRecord::Schema.define(version: 20140814133547) do
     t.datetime "updated_at"
     t.float    "latitude"
     t.float    "longitude"
+    t.integer  "owner"
   end
 
   create_table "trips_users", force: true do |t|

@@ -1,6 +1,6 @@
 class DescriptionsController < ApplicationController
   before_action :set_description_id, only: [:update]
-  layout "description", only: [:new, :edit]
+  layout "blog_article", only: [:new, :edit]
   layout "blog", only: [:show]
   before_action :set_description_name, only: [ :show, :edit, :destroy, :template]
 

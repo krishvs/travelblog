@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
 
   resources :blogs, :path => 'articles'
+  get 'maps/:name', to: "maps#public_show"
 
   resources :trips do
     get 'collaborators', on: :member

@@ -1,0 +1,49 @@
+<%- model_class = Address -%>
+<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.3/Leaflet.fullscreen.min.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.3/leaflet.fullscreen.css' rel='stylesheet' />
+  <div class="public_map" id="map" ></div>
+ <script>
+  $(function(){
+    var original_points =[];
+    var markers = [];
+    var latlngs = [];
+    original_points[0] = [-12.044012922866312, -77.02470665341184]
+    original_points[1] = [-12.044012922866312, -77.02470665341184]
+
+    <% @map.addresses.each_with_index do |address,index| %>
+    	original_points[<%=index%>] = [<%= address.latitude %>,<%= address.longitude %>]
+   	<% end %>
+    var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+    var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 12, attribution: osmAttrib}); 
+
+    var map = L.map('map').setView([original_points[0][0], original_points[0][1]], 10);
+    L.control.fullscreen().addTo(map);
+    map.addLayer(osm);
+
+    function setMapMarker(data) {
+        var fixedMarker = L.marker([data[0], data[1]]).addTo(map);
+        fixedMarker.bindPopup(data[2]);
+        markers.push(fixedMarker);
+        latlngs.push(new L.LatLng(data[0], data[1]));
+        
+    }
+    <% @map.addresses.each do |address| %>
+      setMapMarker([<%= address.latitude %>,<%= address.longitude %>,"<%= address.address %>"])
+    <% end %>
+
+    var polyline = L.polyline(latlngs).addTo(map);
+  });
+
+ </script>
+<style>
+  body,html{
+    width:100%;
+    height: 100%;
+  }
+  .public_map{
+    width:100%;
+    height: 100%;
+  }
+
+</style>

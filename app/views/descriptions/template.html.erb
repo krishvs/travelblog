@@ -1,3 +1,14 @@
+<%= stylesheet_link_tag    'codemirror/codemirror', media: 'all', 'data-turbolinks-track' => true %>
+
+<%= stylesheet_link_tag    'codemirror/theme/monokai', media: 'all', 'data-turbolinks-track' => true %>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/addon/edit/matchbrackets.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/mode/xml/xml.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/mode/css/css.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/javascript/javascript.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/vbscript/vbscript.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/mode/htmlmixed/htmlmixed.js"></script>
+
+
 <%= form_tag(update_template_trip_folder_descriptions_path(:trip_id => @trip.name, :folder_id => @folder.name), id: "template_update_form") do %>
 	<div class="col-sm-12">
 	<%= text_area_tag("codemirror_template",@template, size: '50x10', name: "template") %>

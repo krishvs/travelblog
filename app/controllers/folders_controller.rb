@@ -14,6 +14,11 @@ class FoldersController < ApplicationController
   def show
     @trip = Trip.find_by_name(params[:trip_id])
     @folder = @trip.folders.find_by_name(params[:id])
+    if request.headers['X-PJAX']
+      render :layout => false
+    else
+      render :layout => "folder"
+    end
   end
 
   # GET /folders/new
