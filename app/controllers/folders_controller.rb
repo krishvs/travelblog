@@ -7,6 +7,7 @@ class FoldersController < ApplicationController
   # GET /folders.json
   def index
     @trip = Trip.find_by_name(params[:trip_id])
+    render :layout => "trip"
   end
 
   # GET /folders/1

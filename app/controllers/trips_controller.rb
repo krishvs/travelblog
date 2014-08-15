@@ -9,16 +9,19 @@
   # GET /trips.json
   def index
     @trips = current_user.trips
+    render :layout => "trip_index"
   end
 
   # GET /trips/1
   # GET /trips/1.json
   def show
+    render :layout => "trip"
   end
 
   # GET /trips/new
   def new
     @trip = Trip.new
+    render :layout => "trip_index"
   end
 
   # GET /trips/1/edit

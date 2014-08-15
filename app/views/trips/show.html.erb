@@ -1,33 +1,4 @@
 <%- model_class = Trip -%>
-  <div class="col-sm-10 col-sm-offset-1">
-    <div class="row ">
-      <div class="page-header col-xs-9">
-        <span class="main-heading"><%= @trip.name %></span>
-      </div>
-      <div class="new-project-btn-div col-xs-3">
-        <%= link_to new_trip_path,
-                :class => 'btn btn-default new-project' do%>
-          <i class="fa fa-folder-o "></i> New Trip
-        <%- end -%>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-3">
-        <div class="row">
-          <ul class="nav nav-pills nav-stacked custom-sidebar">
-            <li class="sidebar-active"><a href="#">Folders</a></li>
-            <li><a id="trip-history">History</a></li>
-            <li><a id="add-collaborators">Add Collaborators</a></li>
-            <li><a href="#">Profile</a></li>
-          </ul>
-        </div>
-        <div class="row add-members-box">
-          <ul class="nav nav-pills nav-stacked">
-           <li><h5 class="member-count"><%= @trip.users.length %> Members</h5></li>
-           <li><i class="fa fa-plus add-members"></i></li>
-          </ul>
-        </div>
-      </div>
       <div class="col-sm-9">
         <div class="row">
           <% @trip.folders.each do |folder| %>
@@ -74,63 +45,9 @@
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-    </div>   
-  </div>
 <script>
   $(function(){
-    $('.time').each(function(){
-      $(this).html('updated '+moment($(this).html(), "YYYYMMDD").fromNow());
-    });
-    $(document).on('click','.folder-display-panel', function(){
-      window.location.href = $(this).attr("data-folder-path");
-    });
-    $(document).on('click','#add-collaborators', function(){
-      $('#myModal').find('.modal-dialog').first().addClass('modal-sm');
-      $('#myModal').modal({
-        remote: "<%= collaborators_trip_path(:id => @trip.name)%>"
-      });
-    });
     
-    $(document).on('click','.add-members', function(){
-      window.location.href = "<%= collaborators_trip_path(:id => @trip.name)%>";
-    });
-    $(document).on('click','#new-trip', function(){
-      $('#myModal').modal({
-        remote: "<%= new_trip_folder_path(:trip_id => @trip.name)%>"
-      })
-    });
-    $(document).on('click','#trip-history', function(){
-      $('#myModal').modal({
-        remote: "<%= trip_user_action_path(:trip_id => @trip.name, :id => @trip.name) %>"
-      })
-    });
-    $(document).on('click','.custom-edit-icon', function(e){
-        e.stopPropagation()
-       url = $(this).attr('data-folder-edit-path');
-       console.log('The value of the uel is ',url);
-      $('#myModal').modal({
-        remote: url
-      })
-    });
-    $('body').on('hidden.bs.modal', '.modal', function () {
-      if($(this).find('.modal-dialog').first().hasClass('modal-sm')){
-        $(this).find('.modal-dialog').first().removeClass("modal-sm");
-      }
-        $(this).removeData('bs.modal');
-    });
-
-    $('.folder-display-panel').hover(function(){
-      console.log('I am in hover');
-      $(this).find('.panel-footer').first().addClass('darken');
-      $(this).find('.panel-body').first().addClass('whiten');
-      $(this).find('.overlay-div').first().show();
-      console.log( $(this).find('.panel-footer').first().attr('class'))
-    },function(){
-       $(this).find('.panel-body').first().removeClass('whiten');
-      $(this).find('.panel-footer').first().removeClass('darken');
-      $(this).find('.overlay-div').first().hide();
-      // $(this).removeClass('darken');
-    });
 
   })
 

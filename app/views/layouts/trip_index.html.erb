@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Travelblog</title>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxDmirbK9yzvj9SIUK5ZwLFnDo1c-ksbY"></script>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'controllers/index', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'controllers/scaffolds', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'controllers/timeline', 'data-turbolinks-track' => true %>
+
+
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <%= csrf_meta_tags %>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<%= render partial: "elements/navbar" %>
+<%= bootstrap_flash %>
+
+<div class="container" >
+   <div class="row ">
+      <div class="page-header col-xs-9">
+        <span class="main-heading"><%=t '.title', :default => Trip %></span>
+      </div>
+      <div class="new-project-btn-div col-xs-3">
+        <%= link_to new_trip_path,
+                :class => 'btn btn-default new-project' do%>
+          <i class="fa fa-folder-o "></i> New Trip
+        <%- end -%>
+      </div>
+    </div>
+    <div class="row">
+       <div class="col-sm-9" id="pjax-container">
+        <div class="row">
+          <%= yield %>
+        </div>
+      </div> 
+    </div>
+</div>
+
+</body>
+</html>
