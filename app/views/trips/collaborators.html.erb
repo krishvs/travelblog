@@ -4,11 +4,11 @@
 </div>
 <div class="modal-body">
   <div>
-      <div class="row">
-        <input type="text" placeholder="name of collaborator" name="users" id="user_name">
-        <button id="add_user" class="btn btn-primary">Add User</button>
-      </div>
+    <div class="row">
+      <input type="text" placeholder="name of collaborator" name="users" id="user_name">
+      <button id="add_user" class="btn btn-primary">Add User</button>
     </div>
+  </div>
     <script>
       var url = "<%= add_collaborator_trip_path(:id => @trip.name) %>"
       $(function(){
